@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0" demote-non-dropping-particle="display-and-sort" page-range-format="chicago">
+    
+    <!-- to do:
+        - add 
+            + DOI / URL for software
+        - remove:
+            + series
+            + volume in series 
+    -->
   <info>
     <title>Chicago Manual of Style 17th edition (full note)</title>
     <id>http://www.zotero.org/styles/chicago-fullnote-bibliography</id>
@@ -135,8 +143,9 @@
   <macro name="contributors-note">
     <group delimiter=" ">
       <names variable="author">
-        <name and="text" sort-separator=", " delimiter=", "/>
-        <label form="short" prefix=", "/>
+          <!-- intialise the forenames -->
+        <name and="text" initialize-with=". " sort-separator=", " delimiter=", "/>
+        <label form="short" prefix=", " strip-periods="true"/>
         <substitute>
           <names variable="editor"/>
           <names variable="translator"/>
@@ -1235,8 +1244,9 @@
           </group>
         </if>
       </choose>
+        <!-- remove URLS from books, journal articles etc. -->
       <choose>
-        <if type="legal_case" match="none">
+          <if type="article-journal book chapter legal_case paper-conference" match="none">
           <choose>
             <if variable="DOI">
               <text variable="DOI" prefix="https://doi.org/"/>
