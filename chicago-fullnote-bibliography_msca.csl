@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style class="note" demote-non-dropping-particle="display-and-sort" page-range-format="chicago" version="1.0" xmlns="http://purl.org/net/xbiblio/csl">
   <!-- to do:
+    - webpage: missing URL and date accessed
     -->
   <info>
     <title>Chicago Manual of Style 17th edition (full note): adapted for MSCA-IF applications</title>
@@ -454,8 +455,7 @@
           </else>
         </choose>
       </if>
-    </choose>-->
-  </macro>
+    </choose>--> </macro>
   <macro name="collection-title-journal">
     <choose>
       <if type="article-journal">
@@ -1245,6 +1245,7 @@
           <text macro="archive-note"/>
         </else-if>
       </choose>
+      <!-- date of access -->
       <choose>
         <if match="none" variable="issued">
           <group delimiter=" ">
@@ -1267,7 +1268,8 @@
             </else>
           </choose>
         </if>
-        <elseif match="none" type="article-journal book chapter legal_case paper-conference">
+        <!-- somehow the URL is omitted from webpages. I have no time for debugging and add it here -->
+        <else-if match="none" type="article-journal book chapter legal_case paper-conference">
           <choose>
             <if variable="DOI">
               <text prefix="https://doi.org/" variable="DOI"/>
@@ -1276,7 +1278,7 @@
               <text variable="URL"/>
             </else>
           </choose>
-        </elseif>
+        </else-if>
       </choose>
     </group>
   </macro>
@@ -1342,12 +1344,12 @@
   </macro>
   <citation disambiguate-add-names="true" et-al-min="4" et-al-use-first="1">
     <!-- should there be sorting in footnotes? -->
-    <sort>
+    <!--<sort>
       <key macro="contributors-sort"/>
       <key variable="title"/>
       <key variable="genre"/>
       <key variable="issued"/>
-    </sort>
+    </sort>-->
     <layout delimiter="; " suffix=".">
       <choose>
         <if match="any" position="ibid ibid-with-locator">
