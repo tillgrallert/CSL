@@ -59,6 +59,9 @@
       <term name="close-quote">«</term>
       <term name="open-inner-quote">›</term>
       <term name="close-inner-quote">‹</term>
+        <term name="no-place" form="short">o. O.</term>
+        <term name="here">here</term>
+        <term name="blog-post">Eintrag im Blog</term>
     </terms>
     <date form="numeric" delimiter=".">
       <date-part name="day" form="numeric"/>
@@ -89,7 +92,7 @@
             </term>
             <term name="editortranslator" form="verb-short">ed. a. transl. by</term>
             <term name="et-al">et al.</term>
-            <term name="ibid">Ibid</term>
+            <term name="ibid">ibid.</term>
             <term name="illustrator" form="verb-short">illus. by</term>
             <term name="translator" form="short">
                 <single>Transl.</single>
@@ -103,6 +106,9 @@
             <term name="close-quote">«</term>
             <term name="open-inner-quote">›</term>
             <term name="close-inner-quote">‹</term>
+            <term name="no-place" form="short">n.pl.</term>
+            <term name="here">here</term>
+            <term name="blog-post">post at</term>
         </terms>
         <date form="numeric" delimiter=".">
             <date-part name="day" form="numeric"/>
