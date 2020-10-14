@@ -369,12 +369,15 @@
       <text macro="tertiary-title"/>
       <text macro="tertiary-contributors"/>
     </group>
-    <group>
-      <group prefix=", " delimiter=". ">
-        <label variable="locator" form="short"/>
-        <text variable="page"/>
-      </group>
-    </group>
+      <!-- pagination must be suppressed for any reference without page numbers -->
+      <choose>
+          <if match="all" variable="page">
+              <group prefix=", " delimiter=". ">
+                  <label variable="locator" form="short"/>
+                  <text variable="page"/>
+              </group>
+          </if>
+      </choose>
   </macro>
   <macro name="volume-and-issue">
     <choose>
