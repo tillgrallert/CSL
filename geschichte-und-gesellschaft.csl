@@ -11,6 +11,10 @@
       <name>Julia Preis</name>
       <email>gg-redaktion@fu-berlin.de</email>
     </author>
+      <author>
+          <name>Till Grallert</name>
+          <email>till.grallert@fu-berlin.de</email>
+      </author>
     <category citation-format="note"/>
     <category field="humanities"/>
     <issn>2196-9000</issn>
@@ -62,6 +66,50 @@
       <date-part name="year"/>
     </date>
   </locale>
+    <locale xml:lang="en">
+        <terms>
+            <term name="and">a.</term>
+            <term name="collection-editor" form="short">
+                <single>Ed.</single>
+                <multiple>Eds.</multiple>
+            </term>
+            <term name="collection-editor" form="verb-short">ed. by</term>
+            <term name="editor" form="short">
+                <single>Ed.</single>
+                <multiple>Eds.</multiple>
+            </term>
+            <term name="editor" form="verb-short">
+                <single>ed. by</single>
+                <multiple>ed. by</multiple>
+            </term>
+            <term name="editorial-director" form="verb-short">ed. by</term>
+            <term name="editortranslator" form="short">
+                <single>ed. a. transl.</single>
+                <multiple>ed. a. transl.</multiple>
+            </term>
+            <term name="editortranslator" form="verb-short">ed. a. transl. by</term>
+            <term name="et-al">et al.</term>
+            <term name="ibid">Ibid</term>
+            <term name="illustrator" form="verb-short">illus. by</term>
+            <term name="translator" form="short">
+                <single>Transl.</single>
+                <multiple>Transl.</multiple>
+            </term>
+            <term name="translator" form="verb-short">
+                <single>transl. by</single>
+                <multiple>transl. by</multiple>
+            </term>
+            <term name="open-quote">»</term>
+            <term name="close-quote">«</term>
+            <term name="open-inner-quote">›</term>
+            <term name="close-inner-quote">‹</term>
+        </terms>
+        <date form="numeric" delimiter=".">
+            <date-part name="day" form="numeric"/>
+            <date-part name="month" form="numeric"/>
+            <date-part name="year"/>
+        </date>
+    </locale>
   <macro name="main-contributors-cite-long">
     <choose>
       <if variable="author">
