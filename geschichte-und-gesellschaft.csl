@@ -418,7 +418,7 @@
         <text variable="publisher-place"/>
       </if>
       <else-if type="book chapter" match="any">
-        <text value="o. O."/>
+        <text term="no-place" form="short"/>
       </else-if>
     </choose>
   </macro>
@@ -503,9 +503,12 @@
   <macro name="locator-first">
     <choose>
       <if type="article-journal chapter entry-dictionary entry-encyclopedia" match="any">
-        <group prefix=", hier " delimiter=". ">
-          <label variable="locator" form="short"/>
-          <text variable="locator"/>
+        <group prefix=", ">
+           <text term="here" suffix=" "/>
+            <group delimiter=". ">
+                <label variable="locator" form="short"/>
+                <text variable="locator"/>
+            </group>
         </group>
       </if>
       <else>
@@ -549,7 +552,10 @@
               </group>
             </if>
             <else-if type="post-weblog">
-              <text prefix=", Eintrag im Blog " macro="secondary-title"/>
+                <group prefix=", ">
+                    <text variable="blog-post"/>
+                    <text macro="secondary-title"/>
+                </group>
             </else-if>
             <else-if type="article-newspaper" match="all">
               <group prefix=", ">
