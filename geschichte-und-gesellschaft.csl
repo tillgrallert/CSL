@@ -62,6 +62,7 @@
         <term name="no-place" form="short">o. O.</term>
         <term name="here">here</term>
         <term name="blog-post">Eintrag im Blog</term>
+        <term name="issue" form="short">H.</term>
     </terms>
     <date form="numeric" delimiter=".">
       <date-part name="day" form="numeric"/>
@@ -109,6 +110,7 @@
             <term name="no-place" form="short">n.pl.</term>
             <term name="here">here</term>
             <term name="blog-post">post at</term>
+            <term name="issue" form="short">I.</term>
         </terms>
         <date form="numeric" delimiter=".">
             <date-part name="day" form="numeric"/>
@@ -310,6 +312,8 @@
       </if>
     </choose>
   </macro>
+    <!-- this macro ends with a trailing comma and all followig macros start with a leading comma. 
+        The trailing comma is caused by `volume-and-issue` and needs to be removed-->
   <macro name="secondary-title-addendum">
     <group prefix=" (" delimiter=", " suffix=")">
       <choose>
@@ -379,19 +383,23 @@
           </if>
       </choose>
   </macro>
+    <!-- this macro ends with a trailing comma that needs to be removed-->
   <macro name="volume-and-issue">
     <choose>
       <if type="article-journal">
         <group>
           <text variable="volume" quotes="false" suffix=". "/>
-          <group delimiter=",">
-            <date form="text" variable="issued" suffix=", ">
+            <!-- why is a single element grouped? -->
+<!--          <group delimiter=",">-->
+            <date form="text" variable="issued">
               <date-part name="year"/>
             </date>
-          </group>
+          <!--</group>-->
           <choose>
             <if match="all" variable="issue">
-              <text variable="issue" prefix="H. "/>
+<!--               <label variable="issue" prefix=", " suffix=" "/>-->
+              <text term="issue" prefix=", " form="short" suffix=" "/>
+              <text variable="issue"/>
             </if>
           </choose>
         </group>
