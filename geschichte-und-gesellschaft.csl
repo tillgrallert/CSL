@@ -373,7 +373,7 @@
       <choose>
           <if match="all" variable="page">
               <group prefix=", " delimiter=". ">
-                  <label variable="locator" form="short"/>
+                  <label variable="page" form="short"/>
                   <text variable="page"/>
               </group>
           </if>
