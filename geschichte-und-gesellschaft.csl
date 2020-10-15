@@ -75,13 +75,13 @@
         <terms>
             <term name="and">a.</term>
             <term name="collection-editor" form="short">
-                <single>Ed.</single>
-                <multiple>Eds.</multiple>
+                <single>ed.</single>
+                <multiple>eds.</multiple>
             </term>
             <term name="collection-editor" form="verb-short">ed. by</term>
             <term name="editor" form="short">
-                <single>Ed.</single>
-                <multiple>Eds.</multiple>
+                <single>ed.</single>
+                <multiple>eds.</multiple>
             </term>
             <term name="editor" form="verb-short">
                 <single>ed. by</single>
