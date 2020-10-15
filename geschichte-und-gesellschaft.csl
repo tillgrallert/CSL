@@ -326,14 +326,18 @@
       <if type="article-journal">
         <text prefix=" " macro="volume-and-issue"/>
         <choose>
+            <!-- this condition cannot work since it is nested inside a condition that selected a different reference type -->
           <if type="article-newspaper">
             <text prefix=", " variable="section"/>
           </if>
         </choose>
       </if>
-      <else-if type="chapter">
-        <text prefix=", " macro="volume-and-issue"/>
-      </else-if>
+        <!-- I don't see why volume information should be limited to chapters -->
+<!--      <else-if type="chapter">-->
+        <else>
+            <text prefix=", " macro="volume-and-issue"/>
+        </else>
+      <!--</else-if>-->
     </choose>
   </macro>
   <macro name="tertiary-title">
@@ -412,7 +416,8 @@
               <text variable="volume"/>
             </group>
           </if>
-          <else-if variable="number-of-volumes">
+            <!-- should the total number of volumes only  be displayed if no individual volume number is present? -->
+          <else-if variable="number-of-volumes" match="all">
             <text variable="number-of-volumes" form="short"/>
             <text prefix=" " term="volume" plural="true" form="short"/>
           </else-if>
@@ -585,6 +590,7 @@
           <text macro="extra-info"/>
         </else>
       </choose>
+        <!-- debugging single fields -->
     </layout>
   </citation>
 </style>
