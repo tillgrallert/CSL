@@ -63,7 +63,7 @@
         <term name="here">here</term>
         <term name="blog-post">Eintrag im Blog</term>
         <term name="issue" form="short">H.</term>
-        <term name="thesis">PhD thesis</term>
+        <term name="thesis">Diss.</term>
     </terms>
     <date form="numeric" delimiter=".">
       <date-part name="day" form="numeric"/>
