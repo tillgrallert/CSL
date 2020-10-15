@@ -63,6 +63,7 @@
         <term name="here">here</term>
         <term name="blog-post">Eintrag im Blog</term>
         <term name="issue" form="short">H.</term>
+        <term name="thesis">PhD thesis</term>
     </terms>
     <date form="numeric" delimiter=".">
       <date-part name="day" form="numeric"/>
@@ -110,7 +111,8 @@
             <term name="no-place" form="short">n.pl.</term>
             <term name="here">here</term>
             <term name="blog-post">post at</term>
-            <term name="issue" form="short">I.</term>
+            <term name="issue" form="short">no.</term>
+            <term name="thesis">PhD thesis</term>
         </terms>
         <date form="numeric" delimiter=".">
             <date-part name="day" form="numeric"/>
@@ -363,7 +365,19 @@
   <macro name="published">
     <text prefix=", " variable="genre"/>
     <text prefix=", " variable="medium"/>
-    <text prefix=", " macro="publisher-place"/>
+      <!-- for theses: "PhD thesis" + publisher but NO publisher-place -->
+      <group prefix=", ">
+          <choose>
+          <if type="thesis" match="any">
+              <!-- replace prefix with variable -->
+              <text term="thesis" prefix=" "/>
+              <text variable="publisher" prefix=" "/>
+          </if>
+          <else>
+              <text macro="publisher-place"/>
+          </else>
+      </choose>
+      </group>
     <choose>
       <if type="book chapter" match="any">
         <text prefix=" " macro="main-date"/>
