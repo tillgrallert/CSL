@@ -546,6 +546,19 @@
       </else>
     </choose>
   </macro>
+    <macro name="archive-note-largest-to-smallest">
+        <choose>
+            <if match="any" type="manuscript letter personal_communication graphic report">
+                <group delimiter=", ">
+                    <text variable="archive"/>
+                    <text text-case="capitalize-first" variable="archive_location"/>
+                    <!-- this field is not present in Zotero and it is not entirely clear which entry from the extra field would map to this field -->
+                    <!--          <text variable="archive-place"/>-->
+                    <text variable="call-number"/>
+                </group>
+            </if>
+        </choose>
+    </macro>
   <citation delimiter-precedes-last="never" delimiter-precedes-et-al="never" and="text" et-al-min="3" et-al-use-first="1" disambiguate-add-names="true" disambiguate-add-givenname="true">
     <layout delimiter="; " suffix=".">
       <choose>
@@ -563,8 +576,11 @@
           </group>
           <text macro="locator-following"/>
         </else-if>
+          <!-- first occurrence -->
         <else>
           <group delimiter=", ">
+              <!-- Information on archival holdings -->
+              <text macro="archive-note-largest-to-smallest"/>
             <text macro="main-contributors-cite-long"/>
             <text macro="main-title-long"/>
           </group>
