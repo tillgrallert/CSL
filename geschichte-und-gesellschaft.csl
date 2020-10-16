@@ -430,9 +430,10 @@
                     <text variable="volume" quotes="false" suffix=". "/>
                     <!-- why is a single element grouped? -->
                     <!--          <group delimiter=",">-->
-                    <date form="text" variable="issued">
+                    <text macro="main-date"/>
+                    <!--<date form="text" variable="issued">
                         <date-part name="year"/>
-                    </date>
+                    </date>-->
                     <!--</group>-->
                     <choose>
                         <if match="all" variable="issue">
@@ -478,20 +479,32 @@
         </choose>
         <choose>
             <if variable="issued">
-                <date variable="issued">
-                    <date-part name="day" form="numeric" suffix=". "/>
-                    <date-part name="month" form="numeric" suffix=". "/>
-                    <date-part name="year"/>
-                </date>
+                <!-- different date formats based on reference type -->
+                <choose>
+                    <!-- add forum and blog posts -->
+                    <if type="article-newspaper article-magazine letter personal_communication webpage" match="any">
+                        <date variable="issued">
+                            <date-part name="day" form="numeric" suffix=". "/>
+                            <date-part name="month" form="numeric" suffix=". "/>
+                            <date-part name="year"/>
+                        </date>
+                    </if>
+                    <!-- fallback: year only -->
+                    <else>
+                        <date variable="issued" prefix=", ">
+                            <date-part name="year"/>
+                        </date>
+                    </else>
+                </choose>
             </if>
             <!-- I don't see how this else-if should ever kick in as it depends on the "issued" field that triggers the if condition -->
-            <else-if type="article-newspaper" match="all">
+            <!--<else-if type="article-newspaper" match="all">
                 <date variable="issued" prefix=", ">
                     <date-part name="day"/>
                     <date-part name="month"/>
                     <date-part name="year"/>
                 </date>
-            </else-if>
+            </else-if>-->
             <else>
                 <text term="no date" form="short"/>
             </else>
