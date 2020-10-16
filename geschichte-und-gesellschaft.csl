@@ -383,10 +383,16 @@
         <!-- since the current release of CSL do not have a reference type "software", Zotero internally maps this type to "book"-->
         <group prefix=", " delimiter=", ">
             <text prefix="v. " variable="version"/>
-            <text variable="genre"/>
+            <choose>
+                <!-- the type or genre should be removed for theses -->
+                <if type="thesis" match="none">
+                    <text variable="genre"/>
+                </if>
+            </choose>
             <text variable="medium"/>
         </group>
         <!-- for theses: "PhD thesis" + publisher but NO publisher-place -->
+        <!-- for periodical articles: no publisher-place -->
         <group prefix=", ">
             <choose>
                 <if type="thesis" match="any">
@@ -394,6 +400,7 @@
                     <text term="thesis" prefix=" "/>
                     <text variable="publisher" prefix=" "/>
                 </if>
+                <else-if type="article-newspaper article-magazine" match="any"/>
                 <else>
                     <text macro="publisher-place"/>
                 </else>
