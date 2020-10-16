@@ -637,7 +637,7 @@
                         <text macro="main-title-short"/>
                         <!-- archival holdings/ letters also still need place and date for proper identification -->
                         <choose>
-                            <if type="letter manuscript" match="any">
+                            <if type="article-newspaper article-magazine letter manuscript personal_communication" match="any">
                                 <text macro="published"/>
                             </if>
                         </choose>
