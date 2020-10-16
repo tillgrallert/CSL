@@ -479,11 +479,12 @@
         <choose>
             <if variable="issued">
                 <date variable="issued">
-                    <date-part name="day" form="numeric" suffix="."/>
-                    <date-part name="month" form="numeric" suffix="."/>
+                    <date-part name="day" form="numeric" suffix=". "/>
+                    <date-part name="month" form="numeric" suffix=". "/>
                     <date-part name="year"/>
                 </date>
             </if>
+            <!-- I don't see how this else-if should ever kick in as it depends on the "issued" field that triggers the if condition -->
             <else-if type="article-newspaper" match="all">
                 <date variable="issued" prefix=", ">
                     <date-part name="day"/>
@@ -495,6 +496,8 @@
                 <text term="no date" form="short"/>
             </else>
         </choose>
+        <!-- I am not sure that this formatting of the edition is actually part of GG's recommendations. 
+            I should anyway be moved outside this macro as it is not a date! -->
         <text variable="edition" vertical-align="sup"/>
     </macro>
     <macro name="original-date">
