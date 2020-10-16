@@ -379,8 +379,13 @@
         </choose>
     </macro>
     <macro name="published">
-        <text prefix=", " variable="genre"/>
-        <text prefix=", " variable="medium"/>
+        <!-- at least for software, a version number should be added -->
+        <!-- since the current release of CSL do not have a reference type "software", Zotero internally maps this type to "book"-->
+        <group prefix=", " delimiter=", ">
+            <text prefix="v. " variable="version"/>
+            <text variable="genre"/>
+            <text variable="medium"/>
+        </group>
         <!-- for theses: "PhD thesis" + publisher but NO publisher-place -->
         <group prefix=", ">
             <choose>
@@ -529,12 +534,19 @@
     <macro name="extra-info">
         <text prefix=", " variable="dimensions"/>
         <text prefix=", " variable="references"/>
+        <!-- from the GG guidelines it is not clear when to include URLs / DOIs -->
+        <text macro="doi-url"/>
+    </macro>
+    <macro name="doi-url">
         <choose>
-            <if variable="URL">
+            <if variable="DOI">
+                <text prefix=", " variable="DOI"/>
+            </if>
+            <else-if variable="URL">
                 <group prefix=", " delimiter=" ">
                     <text variable="URL"/>
                 </group>
-            </if>
+            </else-if>
         </choose>
     </macro>
     <macro name="locator-following">
@@ -649,6 +661,7 @@
                     </choose>
                     <text macro="secondary-title-addendum"/>
                     <text prefix=", " macro="additional-secondary-contributors"/>
+                    <!-- at least for software, a version number should be added -->
                     <text macro="published"/>
                     <text macro="locator-first"/>
                     <text macro="extra-info"/>
