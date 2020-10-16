@@ -261,10 +261,7 @@
     </macro>
     <macro name="main-title-short">
         <choose>
-            <if type="book" match="any">
-                <text variable="title"/>
-            </if>
-            <else-if type="motion_picture" match="any">
+            <if type="motion_picture" match="any">
                 <choose>
                     <if match="any" variable="original-title">
                         <text variable="original-title"/>
@@ -273,12 +270,21 @@
                         <text variable="title"/>
                     </else>
                 </choose>
-            </else-if>
+            </if>
             <else-if type="chapter" match="all" variable="version">
                 <text variable="container-title"/>
             </else-if>
             <else>
-                <text variable="title"/>
+                <!-- select title-short if it is present -->
+                <choose>
+                    <if variable="title-short">
+                        <text variable="title-short"/>
+                    </if>
+                    <!-- fallback: full title -->
+                    <else>
+                        <text variable="title"/>
+                    </else>
+                </choose>
             </else>
         </choose>
         <choose>
@@ -590,8 +596,16 @@
                 </else-if>
                 <else-if position="subsequent">
                     <group delimiter=", ">
+                        <!-- Information on archival holdings -->
+                        <text macro="archive-note-largest-to-smallest"/>
                         <text macro="main-contributors-cite-short"/>
                         <text macro="main-title-short"/>
+                        <!-- archival holdings/ letters also still need place and date for proper identification -->
+                        <choose>
+                            <if type="letter manuscript" match="any">
+                                <text macro="published"/>
+                            </if>
+                        </choose>
                     </group>
                     <text macro="locator-following"/>
                 </else-if>
