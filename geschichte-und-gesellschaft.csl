@@ -167,10 +167,11 @@
             </else-if>
         </choose>
     </macro>
+    <!-- this macro has no leading or trailing punctuation -->
     <macro name="additional-main-contributors">
         <choose>
             <if type="article-journal chapter entry-dictionary entry-encyclopedia" match="any">
-                <names prefix=", " variable="translator">
+                <names variable="translator" delimiter=", ">
                     <label form="verb-short" suffix=" "/>
                     <name/>
                 </names>
@@ -178,13 +179,13 @@
             <else-if type="book">
                 <choose>
                     <if variable="author">
-                        <names prefix=", " variable="editor translator" delimiter=", ">
+                        <names ariable="editor translator" delimiter=", ">
                             <label form="verb-short" suffix=" "/>
                             <name/>
                         </names>
                     </if>
                     <else>
-                        <names prefix=", " variable="translator" delimiter=", ">
+                        <names variable="translator" delimiter=", ">
                             <label form="verb-short" suffix=" "/>
                             <name/>
                         </names>
@@ -238,6 +239,7 @@
             </if>
         </choose>
     </macro>
+    <!-- this macro has no leading or trailing punctuation -->
     <macro name="main-title-long">
         <choose>
             <if type="entry-dictionary entry-encyclopedia" match="any">
@@ -308,6 +310,7 @@
             </if>
         </choose>
     </macro>
+    <!-- this macro has no leading or trailing punctuation -->
     <macro name="main-title-addendum">
         <group prefix=" (" delimiter=", " suffix=")">
             <text variable="original-title" text-case="title"/>
@@ -326,6 +329,7 @@
             </if>
         </choose>
     </macro>
+    <!-- this macro has no leading or trailing punctuation -->
     <macro name="secondary-title">
         <choose>
             <if type="article-journal chapter post-weblog entry-dictionary entry-encyclopedia"
@@ -334,8 +338,7 @@
             </if>
         </choose>
     </macro>
-    <!-- this macro ends with a trailing comma and all followig macros start with a leading comma. 
-        The trailing comma is caused by `volume-and-issue` and needs to be removed-->
+    <!-- this macro has no leading or trailing punctuation -->
     <macro name="secondary-title-addendum">
         <group prefix=" (" delimiter=", " suffix=")">
             <choose>
@@ -355,11 +358,9 @@
                 </choose>
             </if>
             <!-- I don't see why volume information should be limited to chapters -->
-            <!--      <else-if type="chapter">-->
             <else>
-                <text prefix=", " macro="volume-and-issue"/>
+                <text prefix=" " macro="volume-and-issue"/>
             </else>
-            <!--</else-if>-->
         </choose>
     </macro>
     <macro name="tertiary-title">
@@ -386,58 +387,64 @@
     <macro name="published">
         <!-- at least for software, a version number should be added -->
         <!-- since the current release of CSL do not have a reference type "software", Zotero internally maps this type to "book"-->
-        <group prefix=", " delimiter=", ">
-            <text prefix="v. " variable="version"/>
-            <choose>
-                <!-- the type or genre should be removed for theses -->
-                <if type="thesis" match="none">
-                    <text variable="genre"/>
-                </if>
-            </choose>
-            <text variable="medium"/>
-        </group>
-        <!-- publisher and publication place -->
-        <!-- for theses: "PhD thesis" + publisher but NO publisher-place -->
-        <!-- for periodical articles: no publisher-place -->
-        <group prefix=", ">
-            <choose>
-                <if type="thesis" match="any">
-                    <!-- replace prefix with variable -->
-                    <text term="thesis" prefix=" "/>
-                    <text variable="publisher" prefix=" "/>
-                </if>
-                <!-- for periodical articles: no publisher-place -->
-                <else-if type="article-newspaper article-magazine" match="any"/>
-                <else>
-                    <text macro="publisher-place"/>
-                </else>
-            </choose>
-        </group>
-        <!-- date -->
-        <choose>
-            <if type="book chapter" match="any">
-                <text prefix=" " macro="main-date"/>
-            </if>
-            <else-if type="article-journal" match="any"/>
-            <else>
-                <text macro="main-date" prefix=" "/>
-            </else>
-        </choose>
-        <group prefix=" (" delimiter=", " suffix=")">
-            <text macro="tertiary-title"/>
-            <text macro="tertiary-contributors"/>
-        </group>
-        <!-- pagination must be suppressed for any reference without page numbers -->
-        <choose>
-            <if match="all" variable="page">
-                <group prefix=", " delimiter=". ">
-                    <label variable="page" form="short"/>
-                    <text variable="page"/>
+        <group delimiter="|1| ">
+            <group delimiter=", ">
+                <text prefix="v. " variable="version"/>
+                <choose>
+                    <!-- the type or genre should be removed for theses -->
+                    <if type="thesis" match="none">
+                        <text variable="genre"/>
+                    </if>
+                </choose>
+                <text variable="medium"/>
+            </group>
+            <!-- publisher and publication place -->
+            <!-- for theses: "PhD thesis" + publisher but NO publisher-place -->
+            <group>
+                <group delimiter=" ">
+                    <choose>
+                        <if type="thesis" match="any">
+                            <!-- replace prefix with variable -->
+                            <group delimiter=" ">
+                                <text term="thesis"/>
+                                <text variable="publisher"/>
+                            </group>
+                        </if>
+                        <!-- for periodical articles: no publisher-place -->
+                        <else-if type="article-newspaper article-magazine" match="any"/>
+                        <else>
+                            <text macro="publisher-place"/>
+                        </else>
+                    </choose>
+                    <!-- date -->
+                    <choose>
+                        <if type="book chapter" match="any">
+                            <text macro="main-date"/>
+                        </if>
+                        <else-if type="article-journal" match="any"/>
+                        <else>
+                            <text macro="main-date"/>
+                        </else>
+                    </choose>
                 </group>
-            </if>
-        </choose>
+                <group prefix=" (" delimiter=", " suffix=")">
+                    <text macro="tertiary-title"/>
+                    <text macro="tertiary-contributors"/>
+                </group>
+            </group>
+            <!-- pagination must be suppressed for any reference without page numbers -->
+            <choose>
+                <if match="all" variable="page">
+                    <!-- BUG: if the preceding sections of this macro are empty, the prefixed comma will result in duplicate commas -->
+                    <group delimiter=". ">
+                        <label variable="page" form="short"/>
+                        <text variable="page"/>
+                    </group>
+                </if>
+            </choose>
+        </group>
     </macro>
-    <!-- this macro ends with a trailing comma that needs to be removed-->
+    <!-- this macro has no leading or trailing punctuation -->
     <macro name="volume-and-issue">
         <choose>
             <if type="article-journal">
@@ -470,6 +477,7 @@
             </else-if>
         </choose>
     </macro>
+    <!-- this macro has no leading or trailing punctuation -->
     <macro name="publisher-place">
         <choose>
             <if variable="publisher-place">
@@ -480,6 +488,7 @@
             </else-if>
         </choose>
     </macro>
+    <!-- this macro has no leading or trailing punctuation -->
     <macro name="main-date">
         <choose>
             <if is-uncertain-date="issued">
@@ -502,6 +511,7 @@
                     </if>
                     <!-- fallback: year only -->
                     <else>
+                        <!-- the prefixed comma is correct -->
                         <date variable="issued" prefix=", ">
                             <date-part name="year"/>
                         </date>
@@ -627,7 +637,7 @@
                     <text term="ibid" text-case="capitalize-first"/>
                 </else-if>
                 <else-if position="subsequent">
-                    <group delimiter=", ">
+                    <group delimiter="|4| ">
                         <!-- Information on archival holdings -->
                         <text macro="archive-note-largest-to-smallest"/>
                         <text macro="main-contributors-cite-short"/>
@@ -644,51 +654,54 @@
                 </else-if>
                 <!-- first occurrence -->
                 <else>
-                    <group delimiter=", ">
+                    <!-- for debugging delimiters use something like |1| -->
+                    <group delimiter="|5| ">
                         <!-- Information on archival holdings -->
                         <text macro="archive-note-largest-to-smallest"/>
                         <text macro="main-contributors-cite-long"/>
                         <text macro="main-title-long"/>
+                        <text macro="main-title-addendum"/>
+                        <text macro="additional-main-contributors"/>
+                        <choose>
+                            <if type="article-journal chapter entry-dictionary entry-encyclopedia"
+                                match="any">
+                                <group>
+                                    <text term="in" suffix=": "/>
+                                    <text macro="secondary-contributors"/>
+                                    <text macro="secondary-title"/>
+                                </group>
+                            </if>
+                            <else-if type="post-weblog">
+                                <group>
+                                    <text variable="blog-post"/>
+                                    <text macro="secondary-title"/>
+                                </group>
+                            </else-if>
+                            <else-if type="article-newspaper" match="all">
+                                <group>
+                                    <text term="in" suffix=": "/>
+                                    <text variable="container-title"/>
+                                </group>
+                            </else-if>
+                            <else>
+                                <group delimiter=", ">
+                                    <text macro="secondary-contributors"/>
+                                    <text macro="secondary-title"/>
+                                </group>
+                            </else>
+                        </choose>
+                        <text macro="secondary-title-addendum"/>
+                        <text macro="additional-secondary-contributors"/>
+                        <text macro="published"/>
                     </group>
-                    <text macro="main-title-addendum"/>
-                    <text macro="additional-main-contributors"/>
-                    <choose>
-                        <if type="article-journal chapter entry-dictionary entry-encyclopedia"
-                            match="any">
-                            <group prefix=", ">
-                                <text term="in" suffix=": "/>
-                                <text macro="secondary-contributors"/>
-                                <text macro="secondary-title"/>
-                            </group>
-                        </if>
-                        <else-if type="post-weblog">
-                            <group prefix=", ">
-                                <text variable="blog-post"/>
-                                <text macro="secondary-title"/>
-                            </group>
-                        </else-if>
-                        <else-if type="article-newspaper" match="all">
-                            <group prefix=", ">
-                                <text term="in" suffix=": "/>
-                                <text variable="container-title" suffix=", "/>
-                            </group>
-                        </else-if>
-                        <else>
-                            <group prefix=", " delimiter=", ">
-                                <text macro="secondary-contributors"/>
-                                <text macro="secondary-title"/>
-                            </group>
-                        </else>
-                    </choose>
-                    <text macro="secondary-title-addendum"/>
-                    <text prefix=", " macro="additional-secondary-contributors"/>
-                    <!-- at least for software, a version number should be added -->
-                    <text prefix=", " macro="published"/>
                     <text macro="locator-first"/>
                     <text macro="extra-info"/>
                 </else>
             </choose>
             <!-- debugging single fields -->
+            <group delimiter="/ " prefix=". Debugging:">
+                <!-- add whatever needs debugging -->
+            </group>
         </layout>
     </citation>
 </style>
