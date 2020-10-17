@@ -387,7 +387,7 @@
     <macro name="published">
         <!-- at least for software, a version number should be added -->
         <!-- since the current release of CSL do not have a reference type "software", Zotero internally maps this type to "book"-->
-        <group delimiter="|1| ">
+        <group delimiter=", ">
             <group delimiter=", ">
                 <text prefix="v. " variable="version"/>
                 <choose>
@@ -401,6 +401,7 @@
             <!-- publisher and publication place -->
             <!-- for theses: "PhD thesis" + publisher but NO publisher-place -->
             <group>
+                <!-- delimiter: " " -->
                 <group delimiter=" ">
                     <choose>
                         <if type="thesis" match="any">
@@ -418,10 +419,7 @@
                     </choose>
                     <!-- date -->
                     <choose>
-                        <if type="book chapter" match="any">
-                            <text macro="main-date"/>
-                        </if>
-                        <else-if type="article-journal" match="any"/>
+                        <if type="article-journal" match="any"/>
                         <else>
                             <text macro="main-date"/>
                         </else>
@@ -511,8 +509,8 @@
                     </if>
                     <!-- fallback: year only -->
                     <else>
-                        <!-- the prefixed comma is correct -->
-                        <date variable="issued" prefix=", ">
+                        <!-- the prefixed comma is faulty -->
+                        <date variable="issued" prefix=" ">
                             <date-part name="year"/>
                         </date>
                     </else>
@@ -637,7 +635,7 @@
                     <text term="ibid" text-case="capitalize-first"/>
                 </else-if>
                 <else-if position="subsequent">
-                    <group delimiter="|4| ">
+                    <group delimiter=", ">
                         <!-- Information on archival holdings -->
                         <text macro="archive-note-largest-to-smallest"/>
                         <text macro="main-contributors-cite-short"/>
@@ -654,8 +652,8 @@
                 </else-if>
                 <!-- first occurrence -->
                 <else>
-                    <!-- for debugging delimiters use something like |1| -->
-                    <group delimiter="|5| ">
+                    <!-- for debugging delimiters use something like \|\d\| -->
+                    <group delimiter=", ">
                         <!-- Information on archival holdings -->
                         <text macro="archive-note-largest-to-smallest"/>
                         <text macro="main-contributors-cite-long"/>
