@@ -347,21 +347,14 @@
                 </if>
             </choose>
         </group>
-        <choose>
-            <if type="article-journal">
-                <text prefix=" " macro="volume-and-issue"/>
-                <choose>
-                    <!-- this condition cannot work since it is nested inside a condition that selected a different reference type -->
-                    <if type="article-newspaper">
-                        <text prefix=", " variable="section"/>
-                    </if>
-                </choose>
-            </if>
-            <!-- I don't see why volume information should be limited to chapters -->
-            <else>
-                <text prefix=" " macro="volume-and-issue"/>
-            </else>
-        </choose>
+        <group delimiter=", ">
+            <text prefix=" " macro="volume-and-issue"/>
+            <choose>
+                <if type="article-newspaper">
+                    <text variable="section"/>
+                </if>
+            </choose>
+        </group>
     </macro>
     <macro name="tertiary-title">
         <choose>
@@ -433,7 +426,6 @@
             <!-- pagination must be suppressed for any reference without page numbers -->
             <choose>
                 <if match="all" variable="page">
-                    <!-- BUG: if the preceding sections of this macro are empty, the prefixed comma will result in duplicate commas -->
                     <group delimiter=". ">
                         <label variable="page" form="short"/>
                         <text variable="page"/>
@@ -451,7 +443,6 @@
                     <text macro="main-date"/>
                     <choose>
                         <if match="all" variable="issue">
-                            <!--               <label variable="issue" prefix=", " suffix=" "/>-->
                             <text term="issue" prefix=", " form="short" suffix=" "/>
                             <text variable="issue"/>
                         </if>
