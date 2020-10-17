@@ -344,6 +344,18 @@
                 match="any">
                 <text variable="container-title" text-case="title"/>
             </if>
+            <!-- periodicals should be referenced by short-title only -->
+            <!-- this could be only relevant for Arabic newspapers with their long subtitles -->
+            <else-if type="article-newspaper article-magazine" match="any">
+                <choose>
+                    <if variable="title-short" match="any">
+                        <text variable="title-short" text-case="title"/>
+                    </if>
+                    <else>
+                        <text variable="container-title" text-case="title"/>
+                    </else> 
+                </choose>
+            </else-if>
         </choose>
     </macro>
     <macro name="secondary-title-long">
