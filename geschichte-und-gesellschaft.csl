@@ -259,6 +259,10 @@
             </if>
         </choose>
     </macro>
+    <!-- this seems to produces a trailing comma, which should be removed. 
+        But I cannot see how this comma could be generated here
+        Debugging showed that this is not the case
+    -->
     <macro name="main-title-short">
         <choose>
             <if type="motion_picture" match="any">
@@ -378,6 +382,7 @@
             </if>
         </choose>
     </macro>
+    <!-- this macro produces a leading comma in some instances -->
     <macro name="published">
         <!-- at least for software, a version number should be added -->
         <!-- since the current release of CSL do not have a reference type "software", Zotero internally maps this type to "book"-->
@@ -391,6 +396,7 @@
             </choose>
             <text variable="medium"/>
         </group>
+        <!-- publisher and publication place -->
         <!-- for theses: "PhD thesis" + publisher but NO publisher-place -->
         <!-- for periodical articles: no publisher-place -->
         <group prefix=", ">
@@ -400,12 +406,14 @@
                     <text term="thesis" prefix=" "/>
                     <text variable="publisher" prefix=" "/>
                 </if>
+                <!-- for periodical articles: no publisher-place -->
                 <else-if type="article-newspaper article-magazine" match="any"/>
                 <else>
                     <text macro="publisher-place"/>
                 </else>
             </choose>
         </group>
+        <!-- date -->
         <choose>
             <if type="book chapter" match="any">
                 <text prefix=" " macro="main-date"/>
@@ -435,13 +443,7 @@
             <if type="article-journal">
                 <group>
                     <text variable="volume" quotes="false" suffix=". "/>
-                    <!-- why is a single element grouped? -->
-                    <!--          <group delimiter=",">-->
                     <text macro="main-date"/>
-                    <!--<date form="text" variable="issued">
-                        <date-part name="year"/>
-                    </date>-->
-                    <!--</group>-->
                     <choose>
                         <if match="all" variable="issue">
                             <!--               <label variable="issue" prefix=", " suffix=" "/>-->
@@ -485,11 +487,13 @@
             </if>
         </choose>
         <choose>
+            <!-- publication date is provided -->
             <if variable="issued">
                 <!-- different date formats based on reference type -->
                 <choose>
                     <!-- add forum and blog posts -->
-                    <if type="article-newspaper article-magazine letter personal_communication webpage" match="any">
+                    <if type="article-newspaper article-magazine letter personal_communication
+                        webpage" match="any">
                         <date variable="issued">
                             <date-part name="day" form="numeric" suffix=". "/>
                             <date-part name="month" form="numeric" suffix=". "/>
@@ -504,14 +508,7 @@
                     </else>
                 </choose>
             </if>
-            <!-- I don't see how this else-if should ever kick in as it depends on the "issued" field that triggers the if condition -->
-            <!--<else-if type="article-newspaper" match="all">
-                <date variable="issued" prefix=", ">
-                    <date-part name="day"/>
-                    <date-part name="month"/>
-                    <date-part name="year"/>
-                </date>
-            </else-if>-->
+            <!-- fallback: no date -->
             <else>
                 <text term="no date" form="short"/>
             </else>
@@ -637,7 +634,8 @@
                         <text macro="main-title-short"/>
                         <!-- archival holdings/ letters also still need place and date for proper identification -->
                         <choose>
-                            <if type="article-newspaper article-magazine letter manuscript personal_communication" match="any">
+                            <if type="article-newspaper article-magazine letter manuscript
+                                personal_communication" match="any">
                                 <text macro="published"/>
                             </if>
                         </choose>
@@ -685,7 +683,7 @@
                     <text macro="secondary-title-addendum"/>
                     <text prefix=", " macro="additional-secondary-contributors"/>
                     <!-- at least for software, a version number should be added -->
-                    <text macro="published"/>
+                    <text prefix=", " macro="published"/>
                     <text macro="locator-first"/>
                     <text macro="extra-info"/>
                 </else>
