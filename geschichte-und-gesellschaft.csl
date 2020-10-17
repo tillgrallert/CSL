@@ -246,6 +246,7 @@
                 <text value="Art. "/>
             </if>
         </choose>
+        <!-- periodicals: -->
         <text variable="title" text-case="title"/>
         <choose>
             <if variable="title" match="none">
@@ -270,6 +271,7 @@
             <if type="motion_picture" match="any">
                 <choose>
                     <if match="any" variable="original-title">
+                        <!-- the value for text-case="" needs to be specified -->
                         <text variable="original-title"/>
                     </if>
                     <else>
@@ -329,6 +331,12 @@
             </if>
         </choose>
     </macro>
+    <macro name="main-title-full">
+        <group>
+            <text macro="main-title-long"/>
+            <text macro="main-title-addendum"/>
+        </group>
+    </macro>
     <!-- this macro has no leading or trailing punctuation -->
     <macro name="secondary-title">
         <choose>
@@ -336,6 +344,36 @@
                 match="any">
                 <text variable="container-title" text-case="title"/>
             </if>
+        </choose>
+    </macro>
+    <macro name="secondary-title-long">
+        <choose>
+            <if type="article-journal chapter entry-dictionary entry-encyclopedia"
+                match="any">
+                <group>
+                    <text term="in" suffix=": "/>
+                    <text macro="secondary-contributors"/>
+                    <text macro="secondary-title"/>
+                </group>
+            </if>
+            <else-if type="post-weblog">
+                <group>
+                    <text variable="blog-post"/>
+                    <text macro="secondary-title"/>
+                </group>
+            </else-if>
+            <else-if type="article-newspaper" match="all">
+                <group>
+                    <text term="in" suffix=": "/>
+                    <text macro="secondary-title"/>
+                </group>
+            </else-if>
+            <else>
+                <group delimiter=", ">
+                    <text macro="secondary-contributors"/>
+                    <text macro="secondary-title"/>
+                </group>
+            </else>
         </choose>
     </macro>
     <!-- this macro has no leading or trailing punctuation -->
@@ -648,37 +686,9 @@
                         <!-- Information on archival holdings -->
                         <text macro="archive-note-largest-to-smallest"/>
                         <text macro="main-contributors-cite-long"/>
-                        <text macro="main-title-long"/>
-                        <text macro="main-title-addendum"/>
+                        <text macro="main-title-full"/>
                         <text macro="additional-main-contributors"/>
-                        <choose>
-                            <if type="article-journal chapter entry-dictionary entry-encyclopedia"
-                                match="any">
-                                <group>
-                                    <text term="in" suffix=": "/>
-                                    <text macro="secondary-contributors"/>
-                                    <text macro="secondary-title"/>
-                                </group>
-                            </if>
-                            <else-if type="post-weblog">
-                                <group>
-                                    <text variable="blog-post"/>
-                                    <text macro="secondary-title"/>
-                                </group>
-                            </else-if>
-                            <else-if type="article-newspaper" match="all">
-                                <group>
-                                    <text term="in" suffix=": "/>
-                                    <text variable="container-title"/>
-                                </group>
-                            </else-if>
-                            <else>
-                                <group delimiter=", ">
-                                    <text macro="secondary-contributors"/>
-                                    <text macro="secondary-title"/>
-                                </group>
-                            </else>
-                        </choose>
+                        <text macro="secondary-title-long"/>
                         <text macro="secondary-title-addendum"/>
                         <text macro="additional-secondary-contributors"/>
                         <text macro="published"/>
