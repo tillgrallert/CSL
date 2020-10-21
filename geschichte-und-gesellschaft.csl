@@ -467,16 +467,32 @@
         </group>
       </group>
       <!-- pagination must be suppressed for any reference without page numbers -->
+        <!-- pagination should be suppressed for newspaper and magazine articles if there is a cited page range -->
       <choose>
-        <if match="all" variable="page">
-          <group delimiter=".&#160;">
-            <label variable="page" form="short"/>
-            <text variable="page"/>
-          </group>
-        </if>
+          <if type="article-newspaper article-magazine" match="any">
+              <choose>
+                  <if variable="locator"/>
+                  <else>
+                      <text macro="page-range"/>
+                  </else>
+              </choose>
+          </if>
+          <else>
+              <text macro="page-range"/>
+        </else>
       </choose>
     </group>
   </macro>
+    <macro name="page-range">
+        <choose>
+            <if match="all" variable="page">
+                <group delimiter=".&#160;">
+                    <label variable="page" form="short"/>
+                    <text variable="page"/>
+                </group>
+            </if>
+        </choose>
+    </macro>
   <!-- this macro has no leading or trailing punctuation -->
   <macro name="volume-and-issue">
     <choose>
@@ -699,7 +715,7 @@
             <text macro="secondary-title-addendum"/>
             <text macro="additional-secondary-contributors"/>
             <text macro="published"/>
-              <text macro="locator-first"/>
+            <text macro="locator-first"/>
           </group>
           <text macro="extra-info"/>
         </else>
