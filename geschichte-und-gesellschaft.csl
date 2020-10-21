@@ -93,7 +93,7 @@
         <single>ed.&#160;a. transl.</single>
         <multiple>ed.&#160;a. transl.</multiple>
       </term>
-      <term name="editortranslator" form="verb-short">ed.&#160;a. transl. by</term>
+      <term name="editortranslator" form="verb-short">ed.&#160;and transl. by</term>
       <!--<term name="et-al">et al.</term><term name="ibid">ibid.</term>-->
       <term name="illustrator" form="verb-short">illus.&#160;by</term>
       <term name="translator" form="short">
@@ -619,7 +619,7 @@
   <macro name="locator-first">
     <choose>
       <if type="article-journal chapter entry-dictionary entry-encyclopedia" match="any">
-        <group prefix=", ">
+        <group>
           <text term="here" suffix=" "/>
           <group delimiter=".&#160;">
             <label variable="locator" form="short"/>
@@ -628,7 +628,7 @@
         </group>
       </if>
       <else>
-        <group delimiter=".&#160;" prefix=", ">
+        <group delimiter=".&#160;">
           <label variable="locator" form="short"/>
           <text variable="locator"/>
         </group>
@@ -656,6 +656,12 @@
     </names>
   </macro>
   <citation delimiter-precedes-last="never" delimiter-precedes-et-al="never" and="text" et-al-min="3" et-al-use-first="1" disambiguate-add-names="true" disambiguate-add-givenname="true">
+      <!-- should there be a sort? -->
+      <sort>
+<!--          <key macro="main-contributors-cite-long" names-min="3" names-use-first="3" sort="ascending"/>-->
+<!--          <key variable="author" sort="ascending"/>-->
+<!--          <key variable="issued" sort="ascending"/>-->
+      </sort>
     <layout delimiter="; " suffix=".">
       <choose>
         <if position="ibid-with-locator">
@@ -693,8 +699,8 @@
             <text macro="secondary-title-addendum"/>
             <text macro="additional-secondary-contributors"/>
             <text macro="published"/>
+              <text macro="locator-first"/>
           </group>
-          <text macro="locator-first"/>
           <text macro="extra-info"/>
         </else>
       </choose>
