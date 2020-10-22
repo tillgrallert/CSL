@@ -455,6 +455,7 @@
           </choose>
           <!-- date -->
           <choose>
+              <!-- if article-magazine should follow article-journal, it would need to be added here -->
             <if type="article-journal" match="any"/>
             <else>
               <text macro="main-date"/>
@@ -498,7 +499,7 @@
   <!-- this macro has no leading or trailing punctuation -->
   <macro name="volume-and-issue">
     <choose>
-      <if type="article-journal">
+      <if type="article-journal" match="any">
         <group>
           <text variable="volume" quotes="false" suffix=". "/>
           <text macro="main-date"/>
@@ -510,6 +511,21 @@
           </choose>
         </group>
       </if>
+        <!-- the following is not specified for GG since they do not cover magazine articles -->
+        <!-- if article-magazine was to follow article-journal, it would also need to be added to the relevant section in the `published` macro -->
+        <else-if type="article-magazine" match="any">
+        <group delimiter=", ">
+            <text variable="volume" quotes="false"/>
+            <group delimiter=" ">
+                <choose>
+                    <if match="all" variable="issue">
+                        <text term="issue" form="short"/>
+                        <text variable="issue"/>
+                    </if>
+                </choose>
+            </group>
+        </group>
+        </else-if>
       <else-if type="book chapter entry-dictionary entry-encyclopedia" match="any">
         <choose>
           <if variable="volume" match="all">
