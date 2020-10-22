@@ -367,7 +367,7 @@
           <text macro="secondary-title"/>
         </group>
       </else-if>
-      <else-if type="article-newspaper" match="all">
+      <else-if type="article-newspaper article-magazine" match="all">
         <group>
           <text term="in" suffix=": "/>
           <text macro="secondary-title"/>
@@ -419,7 +419,7 @@
       </if>
     </choose>
   </macro>
-  <!-- this macro produces a leading comma in some instances -->
+    <!-- this macro has no leading or trailing punctuation -->
   <macro name="published">
     <!-- at least for software, a version number should be added -->
     <!-- since the current release of CSL do not have a reference type "software", Zotero internally maps this type to "book"-->
@@ -466,23 +466,25 @@
           <text macro="tertiary-contributors"/>
         </group>
       </group>
-      <!-- pagination must be suppressed for any reference without page numbers -->
-        <!-- pagination should be suppressed for newspaper and magazine articles if there is a cited page range -->
-      <choose>
-          <if type="article-newspaper article-magazine" match="any">
-              <choose>
-                  <if variable="locator"/>
-                  <else>
-                      <text macro="page-range"/>
-                  </else>
-              </choose>
-          </if>
-          <else>
-              <text macro="page-range"/>
-        </else>
-      </choose>
     </group>
   </macro>
+    <macro name="pagination">
+        <!-- pagination must be suppressed for any reference without page numbers -->
+        <!-- pagination should be suppressed for newspaper articles if there is a cited page range -->
+        <choose>
+            <if type="article-newspaper" match="any">
+                <choose>
+                    <if variable="locator"/>
+                    <else>
+                        <text macro="page-range"/>
+                    </else>
+                </choose>
+            </if>
+            <else>
+                <text macro="page-range"/>
+            </else>
+        </choose>
+    </macro>
     <macro name="page-range">
         <choose>
             <if match="all" variable="page">
@@ -634,7 +636,7 @@
   </macro>
   <macro name="locator-first">
     <choose>
-      <if type="article-journal chapter entry-dictionary entry-encyclopedia" match="any">
+        <if type="article-journal article-magazine chapter entry-dictionary entry-encyclopedia" match="any">
         <group>
           <text term="here" suffix=" "/>
           <group delimiter=".&#160;">
@@ -715,6 +717,8 @@
             <text macro="secondary-title-addendum"/>
             <text macro="additional-secondary-contributors"/>
             <text macro="published"/>
+              <!-- separated `published` and `pagination` -->
+              <text macro="pagination"/>
             <text macro="locator-first"/>
           </group>
           <text macro="extra-info"/>
