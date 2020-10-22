@@ -419,7 +419,7 @@
       </if>
     </choose>
   </macro>
-    <!-- this macro has no leading or trailing punctuation -->
+  <!-- this macro has no leading or trailing punctuation -->
   <macro name="published">
     <!-- at least for software, a version number should be added -->
     <!-- since the current release of CSL do not have a reference type "software", Zotero internally maps this type to "book"-->
@@ -455,7 +455,7 @@
           </choose>
           <!-- date -->
           <choose>
-              <!-- if article-magazine should follow article-journal, it would need to be added here -->
+            <!-- if article-magazine should follow article-journal, it would need to be added here -->
             <if type="article-journal" match="any"/>
             <else>
               <text macro="main-date"/>
@@ -469,33 +469,33 @@
       </group>
     </group>
   </macro>
-    <macro name="pagination">
-        <!-- pagination must be suppressed for any reference without page numbers -->
-        <!-- pagination should be suppressed for newspaper articles if there is a cited page range -->
+  <macro name="pagination">
+    <!-- pagination must be suppressed for any reference without page numbers -->
+    <!-- pagination should be suppressed for newspaper articles if there is a cited page range -->
+    <choose>
+      <if type="article-newspaper" match="any">
         <choose>
-            <if type="article-newspaper" match="any">
-                <choose>
-                    <if variable="locator"/>
-                    <else>
-                        <text macro="page-range"/>
-                    </else>
-                </choose>
-            </if>
-            <else>
-                <text macro="page-range"/>
-            </else>
+          <if variable="locator"/>
+          <else>
+            <text macro="page-range"/>
+          </else>
         </choose>
-    </macro>
-    <macro name="page-range">
-        <choose>
-            <if match="all" variable="page">
-                <group delimiter=".&#160;">
-                    <label variable="page" form="short"/>
-                    <text variable="page"/>
-                </group>
-            </if>
-        </choose>
-    </macro>
+      </if>
+      <else>
+        <text macro="page-range"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="page-range">
+    <choose>
+      <if match="all" variable="page">
+        <group delimiter=".&#160;">
+          <label variable="page" form="short"/>
+          <text variable="page"/>
+        </group>
+      </if>
+    </choose>
+  </macro>
   <!-- this macro has no leading or trailing punctuation -->
   <macro name="volume-and-issue">
     <choose>
@@ -511,21 +511,21 @@
           </choose>
         </group>
       </if>
-        <!-- the following is not specified for GG since they do not cover magazine articles -->
-        <!-- if article-magazine was to follow article-journal, it would also need to be added to the relevant section in the `published` macro -->
-        <else-if type="article-magazine" match="any">
+      <!-- the following is not specified for GG since they do not cover magazine articles -->
+      <!-- if article-magazine was to follow article-journal, it would also need to be added to the relevant section in the `published` macro -->
+      <else-if type="article-magazine" match="any">
         <group delimiter=", ">
-            <text variable="volume" quotes="false"/>
-            <group delimiter=" ">
-                <choose>
-                    <if match="all" variable="issue">
-                        <text term="issue" form="short"/>
-                        <text variable="issue"/>
-                    </if>
-                </choose>
-            </group>
+          <text variable="volume" quotes="false"/>
+          <group delimiter=" ">
+            <choose>
+              <if match="all" variable="issue">
+                <text term="issue" form="short"/>
+                <text variable="issue"/>
+              </if>
+            </choose>
+          </group>
         </group>
-        </else-if>
+      </else-if>
       <else-if type="book chapter entry-dictionary entry-encyclopedia" match="any">
         <choose>
           <if variable="volume" match="all">
@@ -652,7 +652,7 @@
   </macro>
   <macro name="locator-first">
     <choose>
-        <if type="article-journal article-magazine chapter entry-dictionary entry-encyclopedia" match="any">
+      <if type="article-journal article-magazine chapter entry-dictionary entry-encyclopedia" match="any">
         <group>
           <text term="here" suffix=" "/>
           <group delimiter=".&#160;">
@@ -690,12 +690,12 @@
     </names>
   </macro>
   <citation delimiter-precedes-last="never" delimiter-precedes-et-al="never" and="text" et-al-min="3" et-al-use-first="1" disambiguate-add-names="true" disambiguate-add-givenname="true">
-      <!-- should there be a sort? -->
-      <sort>
-<!--          <key macro="main-contributors-cite-long" names-min="3" names-use-first="3" sort="ascending"/>-->
-<!--          <key variable="author" sort="ascending"/>-->
-<!--          <key variable="issued" sort="ascending"/>-->
-      </sort>
+    <!-- should there be a sort? -->
+    <sort>
+      <!--          <key macro="main-contributors-cite-long" names-min="3" names-use-first="3" sort="ascending"/>-->
+      <!--          <key variable="author" sort="ascending"/>-->
+      <!--          <key variable="issued" sort="ascending"/>-->
+    </sort>
     <layout delimiter="; " suffix=".">
       <choose>
         <if position="ibid-with-locator">
@@ -733,8 +733,8 @@
             <text macro="secondary-title-addendum"/>
             <text macro="additional-secondary-contributors"/>
             <text macro="published"/>
-              <!-- separated `published` and `pagination` -->
-              <text macro="pagination"/>
+            <!-- separated `published` and `pagination` -->
+            <text macro="pagination"/>
             <text macro="locator-first"/>
           </group>
           <text macro="extra-info"/>
