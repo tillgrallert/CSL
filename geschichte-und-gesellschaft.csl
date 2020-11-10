@@ -729,8 +729,23 @@
             <text macro="main-contributors-cite-long"/>
             <text macro="main-title-full"/>
             <text macro="additional-main-contributors"/>
-            <text macro="secondary-title-long"/>
-            <text macro="secondary-title-addendum"/>
+              <!-- there is an add requirement that secondary-title-long and secondary-title-addendum need to be separated by comma in all cases but for article-journal -->
+            <group>
+                <choose>
+                <if type="article-journal" match="any">
+                    <group delimiter=" ">
+                        <text macro="secondary-title-long"/>
+                        <text macro="secondary-title-addendum"/>
+                    </group>
+                </if>
+                <else>
+                    <group delimiter=", ">
+                        <text macro="secondary-title-long"/>
+                        <text macro="secondary-title-addendum"/>
+                    </group>
+                </else>
+            </choose>
+           </group>
             <text macro="additional-secondary-contributors"/>
             <text macro="published"/>
             <!-- separated `published` and `pagination` -->
