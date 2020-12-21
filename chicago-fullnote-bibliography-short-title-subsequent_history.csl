@@ -395,6 +395,17 @@
         <else-if type="post-weblog">
           <text font-style="italic" suffix=" (blog)" text-case="title" variable="container-title"/>
         </else-if>
+        <!-- historical periodicals should reference only the short title -->
+        <else-if type="article-newspaper article-magazine" match="any">
+          <choose>
+            <if variable="title-short">
+              <text font-style="italic" text-case="title" variable="title-short"/>
+            </if>
+            <else>
+              <text font-style="italic" text-case="title" variable="container-title"/>
+            </else>
+          </choose>
+        </else-if>
         <else-if match="none" type="bill legislation legal_case">
           <text font-style="italic" text-case="title" variable="container-title"/>
         </else-if>
@@ -525,6 +536,22 @@
           </group>
         </group>
       </if>
+    <!--  for my use cases newspapers and magazines should get volume und issue numbers as the dates are insufficient for identification -->
+      <else-if type="article-magazine" match="any">
+        <group delimiter=", ">
+          <text variable="volume"/>
+          <group delimiter=" ">
+            <text form="short" term="issue"/>
+            <text variable="issue"/>
+          </group>
+        </group>
+      </else-if>
+      <else-if type="article-newspaper" match="any">
+          <group delimiter=" ">
+            <text form="short" term="issue"/>
+            <text variable="issue"/>
+          </group>
+      </else-if>
       <else-if match="any" type="bill legislation legal_case">
         <text macro="legal-cites"/>
       </else-if>
@@ -898,6 +925,7 @@
       </else-if>
     </choose>
   </macro>
+  <!-- this is for periodicals -->
   <macro name="point-locators-join-with-colon">
     <choose>
       <if type="article-journal">
@@ -913,6 +941,7 @@
       </if>
     </choose>
   </macro>
+  <!-- this is for non periodicals -->
   <macro name="point-locators-join-with-comma">
     <choose>
       <if match="none" type="article-journal">
@@ -1377,13 +1406,20 @@
                   <group delimiter=", ">
                     <group delimiter=" ">
                       <group delimiter=", ">
-                        <group delimiter=", ">
-                          <text macro="contributors-note"/>
-                          <text macro="title-note"/>
-                          <text macro="issue-map-graphic"/>
-                        </group>
+                        <choose>
+                          <!-- remove too detailed information for periodicals, particularly newspapers -->
+                          <if type="article-newspaper" match="any"/>
+                          <else>
+                            <group delimiter=", ">
+                              <text macro="contributors-note"/>
+                              <text macro="title-note"/>
+                              <text macro="issue-map-graphic"/>
+                            </group>
+                          </else>
+                        </choose>
                         <text macro="description-note"/>
                         <text macro="secondary-contributors-note"/>
+                        <!-- periodicals should use the short title only -->
                         <text macro="container-title-note"/>
                         <text macro="container-contributors-note"/>
                       </group>
