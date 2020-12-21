@@ -221,6 +221,41 @@
       </substitute>
     </names>
   </macro>
+  <macro name="contributors-title-sort">
+    <group delimiter=", ">
+      <choose>
+        <!-- press -->
+        <if match="any" type="article-magazine article-newspaper">
+          <text variable="container-title"/>
+        </if>
+      </choose>
+      <names variable="author">
+        <name and="text" delimiter=", " delimiter-precedes-last="always" name-as-sort-order="all" sort-separator=", "/>
+        <substitute>
+          <names variable="editor"/>
+          <names variable="translator"/>
+          <text macro="title"/>
+        </substitute>
+      </names>
+    </group>
+  </macro>
+  <macro name="title-sort">
+    <choose>
+      <!-- press -->
+      <if match="any" type="article-magazine article-newspaper">
+        <text variable="container-title"/>
+      </if>
+      <else-if match="all" variable="title">
+        <text variable="title"/>
+      </else-if>
+      <else-if match="all" variable="container-title">
+        <text variable="container-title"/>
+      </else-if>
+      <else-if match="all" variable="title-short">
+        <text variable="title-short"/>
+      </else-if>
+    </choose>
+  </macro>
   <macro name="interviewer-note">
     <names delimiter=", " variable="interviewer">
       <label form="verb" suffix=" " text-case="lowercase"/>
@@ -396,7 +431,7 @@
           <text font-style="italic" suffix=" (blog)" text-case="title" variable="container-title"/>
         </else-if>
         <!-- historical periodicals should reference only the short title -->
-        <else-if type="article-newspaper article-magazine" match="any">
+        <else-if match="any" type="article-newspaper article-magazine">
           <choose>
             <if variable="title-short">
               <text font-style="italic" text-case="title" variable="title-short"/>
@@ -536,8 +571,8 @@
           </group>
         </group>
       </if>
-    <!--  for my use cases newspapers and magazines should get volume und issue numbers as the dates are insufficient for identification -->
-      <else-if type="article-magazine" match="any">
+      <!--  for my use cases newspapers and magazines should get volume und issue numbers as the dates are insufficient for identification -->
+      <else-if match="any" type="article-magazine">
         <group delimiter=", ">
           <text variable="volume"/>
           <group delimiter=" ">
@@ -546,11 +581,11 @@
           </group>
         </group>
       </else-if>
-      <else-if type="article-newspaper" match="any">
-          <group delimiter=" ">
-            <text form="short" term="issue"/>
-            <text variable="issue"/>
-          </group>
+      <else-if match="any" type="article-newspaper">
+        <group delimiter=" ">
+          <text form="short" term="issue"/>
+          <text variable="issue"/>
+        </group>
       </else-if>
       <else-if match="any" type="bill legislation legal_case">
         <text macro="legal-cites"/>
@@ -1308,7 +1343,7 @@
             </if>
             <!-- remove non-sensical URLs. Just because they are there, I would not like to see every link referenced -->
             <!-- exclude reference types -->
-            <else-if type="chapter" match="any"/>
+            <else-if match="any" type="chapter"/>
             <else>
               <text variable="URL"/>
             </else>
@@ -1377,17 +1412,54 @@
       </if>
     </choose>
   </macro>
+  <!-- macro for sorting primary sources -->
+  <macro name="reference-type-sort">
+    <choose>
+      <!-- archival documents -->
+      <if match="any" type="manuscript personal_communication">
+        <text value="1"/>
+      </if>
+      <!-- press -->
+      <else-if match="any" type="article-magazine article-newspaper">
+        <text value="2"/>
+      </else-if>
+      <!-- laws -->
+      <else-if type="bill legislation legal_case" match="any">
+        <text value="3"/>
+      </else-if>
+      <!-- everything else -->
+      <else>
+        <text value="20"/>
+      </else>
+    </choose>
+  </macro>
   <citation disambiguate-add-names="true" et-al-min="4" et-al-use-first="1">
     <layout delimiter="; " suffix=".">
       <choose>
         <if position="subsequent">
           <group delimiter=", ">
-            <text macro="contributors-short"/>
+            <!-- information on archive first -->
+            <text macro="archive-note-largest-to-smallest"/>
+            <choose>
+              <if match="none" type="article-newspaper">
+                <text macro="contributors-short"/>
+              </if>
+            </choose>
             <group delimiter=" ">
               <group delimiter=", ">
-                <text macro="title-short"/>
-                <!--if title & author are the same: -->
-                <text macro="date-disambiguate"/>
+                <choose>
+                  <!-- (historical newspapers should not change depending on context) -->
+                  <if match="any" type="article-newspaper">
+                    <text macro="container-title-note"/>
+                    <text macro="locators-note-join-with-comma"/>
+                    <text macro="issue-note-join-with-comma"/>
+                  </if>
+                  <else>
+                    <text macro="title-short"/>
+                    <!--if title & author are the same: -->
+                    <text macro="date-disambiguate"/>
+                  </else>
+                </choose>
                 <text macro="case-locator-subsequent"/>
               </group>
               <text macro="case-pinpoint-subsequent"/>
@@ -1411,7 +1483,7 @@
                       <group delimiter=", ">
                         <choose>
                           <!-- remove too detailed information for periodicals, particularly newspapers -->
-                          <if type="article-newspaper" match="any"/>
+                          <if match="any" type="article-newspaper"/>
                           <else>
                             <group delimiter=", ">
                               <text macro="contributors-note"/>
@@ -1448,8 +1520,13 @@
   </citation>
   <bibliography entry-spacing="0" et-al-min="11" et-al-use-first="7" hanging-indent="true" subsequent-author-substitute="&#8212;&#8212;&#8212;">
     <sort>
-      <key macro="contributors-sort"/>
-      <key variable="title"/>
+      <!-- private sort key -->
+      <key macro="reference-type-sort"/>
+      <!-- sort by archive? -->
+      <!--      <key macro="archive-note-largest-to-smallest"/>-->
+      <key macro="contributors-title-sort"/>
+      <!--      <key macro="contributors-sort"/>-->
+      <!--      <key macro="title-sort"/>-->
       <key variable="genre"/>
       <key variable="issued"/>
     </sort>
@@ -1459,6 +1536,8 @@
         <if match="any" type="personal_communication"/>
         <else>
           <group delimiter=". ">
+            <!-- debugging -->
+            <!--<text macro="title-sort"/>-->
             <!-- information on archive first -->
             <text macro="archive-largest-to-smallest"/>
             <group delimiter=": ">
@@ -1469,9 +1548,15 @@
                       <group delimiter=", ">
                         <group delimiter=". ">
                           <group delimiter=". ">
-                            <text macro="contributors"/>
-                            <text macro="title"/>
-                            <text macro="issue-map-graphic"/>
+                            <choose>
+                              <!-- remove too detailed information for periodicals, particularly newspapers -->
+                              <if match="any" type="article-newspaper"/>
+                              <else>
+                                <text macro="contributors"/>
+                                <text macro="title"/>
+                                <text macro="issue-map-graphic"/>
+                              </else>
+                            </choose>
                           </group>
                           <text macro="description"/>
                           <text macro="secondary-contributors"/>
