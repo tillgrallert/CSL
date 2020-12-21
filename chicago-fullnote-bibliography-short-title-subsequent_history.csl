@@ -1306,6 +1306,9 @@
             <if variable="DOI">
               <text prefix="https://doi.org/" variable="DOI"/>
             </if>
+            <!-- remove non-sensical URLs. Just because they are there, I would not like to see every link referenced -->
+            <!-- exclude reference types -->
+            <else-if type="chapter" match="any"/>
             <else>
               <text variable="URL"/>
             </else>
@@ -1436,6 +1439,7 @@
               </group>
               <text macro="point-locators-join-with-colon"/>
             </group>
+            <!-- remove non-sensical URLs. Just because they are there, I would not like to see every link referenced -->
             <text macro="access-note"/>
           </group>
         </else>
