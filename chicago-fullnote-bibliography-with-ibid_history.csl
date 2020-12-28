@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style class="note" demote-non-dropping-particle="display-and-sort" page-range-format="chicago" version="1.0" xmlns="http://purl.org/net/xbiblio/csl">
+  <!-- I need to update this style with better support for newspaper and magazine articles, that also include volume and issue information if available. This is done in the point-locator macros -->
   <info>
     <title>Chicago Manual of Style 17th edition (full note, with Ibid.)</title>
     <id>http://www.zotero.org/styles/chicago-fullnote-bibliography-with-ibid</id>
@@ -219,6 +220,41 @@
       </substitute>
     </names>
   </macro>
+  <macro name="contributors-title-sort">
+    <group delimiter=", ">
+      <choose>
+        <!-- press -->
+        <if match="any" type="article-magazine article-newspaper">
+          <text variable="container-title"/>
+        </if>
+      </choose>
+      <names variable="author">
+        <name and="text" delimiter=", " delimiter-precedes-last="always" name-as-sort-order="all" sort-separator=", "/>
+        <substitute>
+          <names variable="editor"/>
+          <names variable="translator"/>
+          <text macro="title"/>
+        </substitute>
+      </names>
+    </group>
+  </macro>
+  <macro name="title-sort">
+    <choose>
+      <!-- press -->
+      <if match="any" type="article-magazine article-newspaper">
+        <text variable="container-title"/>
+      </if>
+      <else-if match="all" variable="title">
+        <text variable="title"/>
+      </else-if>
+      <else-if match="all" variable="container-title">
+        <text variable="container-title"/>
+      </else-if>
+      <else-if match="all" variable="title-short">
+        <text variable="title-short"/>
+      </else-if>
+    </choose>
+  </macro>
   <macro name="interviewer-note">
     <names delimiter=", " variable="interviewer">
       <label form="verb" suffix=" " text-case="lowercase"/>
@@ -393,6 +429,17 @@
         <else-if type="post-weblog">
           <text font-style="italic" suffix=" (blog)" text-case="title" variable="container-title"/>
         </else-if>
+        <!-- historical periodicals should reference only the short title -->
+        <else-if match="any" type="article-newspaper article-magazine">
+          <choose>
+            <if variable="title-short">
+              <text font-style="italic" text-case="title" variable="title-short"/>
+            </if>
+            <else>
+              <text font-style="italic" text-case="title" variable="container-title"/>
+            </else>
+          </choose>
+        </else-if>
         <else-if match="none" type="bill legislation legal_case">
           <text font-style="italic" text-case="title" variable="container-title"/>
         </else-if>
@@ -523,6 +570,22 @@
           </group>
         </group>
       </if>
+      <!--  for my use cases newspapers and magazines should get volume und issue numbers as the dates are insufficient for identification -->
+      <else-if match="any" type="article-magazine">
+        <group delimiter=", ">
+          <text variable="volume"/>
+          <group delimiter=" ">
+            <text form="short" term="issue"/>
+            <text variable="issue"/>
+          </group>
+        </group>
+      </else-if>
+      <else-if match="any" type="article-newspaper">
+        <group delimiter=" ">
+          <text form="short" term="issue"/>
+          <text variable="issue"/>
+        </group>
+      </else-if>
       <else-if match="any" type="bill legislation legal_case">
         <text macro="legal-cites"/>
       </else-if>
@@ -767,6 +830,7 @@
     <choose>
       <if variable="issued">
         <choose>
+          <!-- differentiate by reference type -->
           <if type="legal_case">
             <group delimiter=" ">
               <text variable="authority"/>
@@ -810,6 +874,11 @@
               </group>
             </group>
           </else-if>
+          <!-- all reference types not specifically covered -->
+          <!-- one could add article-magazine and article-newspaper here -->
+          <!--<else-if type="article-magazine article-newspaper">
+            
+          </else-if>-->
           <else>
             <choose>
               <if is-uncertain-date="issued">
@@ -890,6 +959,7 @@
       </else-if>
     </choose>
   </macro>
+  <!-- this is for periodicals -->
   <macro name="point-locators-join-with-colon">
     <choose>
       <if type="article-journal">
@@ -905,6 +975,7 @@
       </if>
     </choose>
   </macro>
+  <!-- this is for non periodicals -->
   <macro name="point-locators-join-with-comma">
     <choose>
       <if match="none" type="article-journal">
@@ -1015,9 +1086,37 @@
         <group delimiter=". ">
           <text text-case="capitalize-first" variable="archive_location"/>
           <text variable="archive"/>
+          <!-- this field is not present in Zotero and it is not entirely clear which entry from the extra field would map to this field -->
           <text variable="archive-place"/>
         </group>
       </else>
+    </choose>
+  </macro>
+  <!-- this macro will produce: PRO FO78/195-->
+  <macro name="archive-largest-to-smallest">
+    <choose>
+      <if match="any" type="manuscript letter personal_communication graphic report">
+        <group delimiter=". ">
+          <text variable="archive"/>
+          <text text-case="capitalize-first" variable="archive_location"/>
+          <!-- this field is not present in Zotero and it is not entirely clear which entry from the extra field would map to this field -->
+          <!--          <text variable="archive-place"/>-->
+          <text variable="call-number"/>
+        </group>
+      </if>
+    </choose>
+  </macro>
+  <macro name="archive-note-largest-to-smallest">
+    <choose>
+      <if match="any" type="manuscript letter personal_communication graphic report">
+        <group delimiter=", ">
+          <text variable="archive"/>
+          <text text-case="capitalize-first" variable="archive_location"/>
+          <!-- this field is not present in Zotero and it is not entirely clear which entry from the extra field would map to this field -->
+          <!--          <text variable="archive-place"/>-->
+          <text variable="call-number"/>
+        </group>
+      </if>
     </choose>
   </macro>
   <macro name="issue-note-join-with-space">
@@ -1219,14 +1318,14 @@
   </macro>
   <macro name="access-note">
     <group delimiter=", ">
-      <choose>
+      <!--<choose>
         <if match="any" type="graphic report">
           <text macro="archive-note"/>
         </if>
         <else-if match="none" type="article-journal bill book chapter legal_case legislation motion_picture paper-conference">
           <text macro="archive-note"/>
         </else-if>
-      </choose>
+      </choose>-->
       <choose>
         <if match="none" variable="issued">
           <group delimiter=" ">
@@ -1241,6 +1340,9 @@
             <if variable="DOI">
               <text prefix="https://doi.org/" variable="DOI"/>
             </if>
+            <!-- remove non-sensical URLs. Just because they are there, I would not like to see every link referenced -->
+            <!-- exclude reference types -->
+            <else-if match="any" type="chapter"/>
             <else>
               <text variable="URL"/>
             </else>
@@ -1251,14 +1353,14 @@
   </macro>
   <macro name="access">
     <group delimiter=". ">
-      <choose>
+      <!--<choose>
         <if match="any" type="graphic report">
           <text macro="archive"/>
         </if>
         <else-if match="none" type="article-journal bill book chapter legal_case legislation motion_picture paper-conference">
           <text macro="archive"/>
         </else-if>
-      </choose>
+      </choose>-->
       <choose>
         <if match="none" variable="issued">
           <group delimiter=" ">
