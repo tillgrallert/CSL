@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style class="note" demote-non-dropping-particle="display-and-sort" page-range-format="chicago" version="1.0" xmlns="http://purl.org/net/xbiblio/csl">
-  <!-- I need to update this style with better support for newspaper and magazine articles, that also include volume and issue information if available. This is done in the point-locator macros -->
   <info>
-    <title>Chicago Manual of Style 17th edition (full note, short title subsequent): for historians</title>
-    <id>http://www.zotero.org/styles/chicago-fullnote-bibliography-short-title-subsequent_history</id>
-    <link href="http://www.zotero.org/styles/chicago-fullnote-bibliography-short-title-subsequent" rel="self"/>
-    <link href="http://www.zotero.org/styles/chicago-fullnote-bibliography" rel="template"/>
+    <title>Chicago Manual of Style 17th edition (full note, with Ibid.)</title>
+    <id>http://www.zotero.org/styles/chicago-fullnote-bibliography-with-ibid</id>
+    <link href="http://www.zotero.org/styles/chicago-fullnote-bibliography-with-ibid" rel="self"/>
     <link href="http://www.chicagomanualofstyle.org/tools_citationguide.html" rel="documentation"/>
     <author>
       <name>Julian Onions</name>
@@ -221,41 +219,6 @@
       </substitute>
     </names>
   </macro>
-  <macro name="contributors-title-sort">
-    <group delimiter=", ">
-      <choose>
-        <!-- press -->
-        <if match="any" type="article-magazine article-newspaper">
-          <text variable="container-title"/>
-        </if>
-      </choose>
-      <names variable="author">
-        <name and="text" delimiter=", " delimiter-precedes-last="always" name-as-sort-order="all" sort-separator=", "/>
-        <substitute>
-          <names variable="editor"/>
-          <names variable="translator"/>
-          <text macro="title"/>
-        </substitute>
-      </names>
-    </group>
-  </macro>
-  <macro name="title-sort">
-    <choose>
-      <!-- press -->
-      <if match="any" type="article-magazine article-newspaper">
-        <text variable="container-title"/>
-      </if>
-      <else-if match="all" variable="title">
-        <text variable="title"/>
-      </else-if>
-      <else-if match="all" variable="container-title">
-        <text variable="container-title"/>
-      </else-if>
-      <else-if match="all" variable="title-short">
-        <text variable="title-short"/>
-      </else-if>
-    </choose>
-  </macro>
   <macro name="interviewer-note">
     <names delimiter=", " variable="interviewer">
       <label form="verb" suffix=" " text-case="lowercase"/>
@@ -430,17 +393,6 @@
         <else-if type="post-weblog">
           <text font-style="italic" suffix=" (blog)" text-case="title" variable="container-title"/>
         </else-if>
-        <!-- historical periodicals should reference only the short title -->
-        <else-if match="any" type="article-newspaper article-magazine">
-          <choose>
-            <if variable="title-short">
-              <text font-style="italic" text-case="title" variable="title-short"/>
-            </if>
-            <else>
-              <text font-style="italic" text-case="title" variable="container-title"/>
-            </else>
-          </choose>
-        </else-if>
         <else-if match="none" type="bill legislation legal_case">
           <text font-style="italic" text-case="title" variable="container-title"/>
         </else-if>
@@ -571,22 +523,6 @@
           </group>
         </group>
       </if>
-      <!--  for my use cases newspapers and magazines should get volume und issue numbers as the dates are insufficient for identification -->
-      <else-if match="any" type="article-magazine">
-        <group delimiter=", ">
-          <text variable="volume"/>
-          <group delimiter=" ">
-            <text form="short" term="issue"/>
-            <text variable="issue"/>
-          </group>
-        </group>
-      </else-if>
-      <else-if match="any" type="article-newspaper">
-        <group delimiter=" ">
-          <text form="short" term="issue"/>
-          <text variable="issue"/>
-        </group>
-      </else-if>
       <else-if match="any" type="bill legislation legal_case">
         <text macro="legal-cites"/>
       </else-if>
@@ -831,7 +767,6 @@
     <choose>
       <if variable="issued">
         <choose>
-          <!-- differentiate by reference type -->
           <if type="legal_case">
             <group delimiter=" ">
               <text variable="authority"/>
@@ -875,11 +810,6 @@
               </group>
             </group>
           </else-if>
-          <!-- all reference types not specifically covered -->
-          <!-- one could add article-magazine and article-newspaper here -->
-          <!--<else-if type="article-magazine article-newspaper">
-            
-          </else-if>-->
           <else>
             <choose>
               <if is-uncertain-date="issued">
@@ -960,7 +890,6 @@
       </else-if>
     </choose>
   </macro>
-  <!-- this is for periodicals -->
   <macro name="point-locators-join-with-colon">
     <choose>
       <if type="article-journal">
@@ -976,7 +905,6 @@
       </if>
     </choose>
   </macro>
-  <!-- this is for non periodicals -->
   <macro name="point-locators-join-with-comma">
     <choose>
       <if match="none" type="article-journal">
@@ -1087,37 +1015,9 @@
         <group delimiter=". ">
           <text text-case="capitalize-first" variable="archive_location"/>
           <text variable="archive"/>
-          <!-- this field is not present in Zotero and it is not entirely clear which entry from the extra field would map to this field -->
           <text variable="archive-place"/>
         </group>
       </else>
-    </choose>
-  </macro>
-  <!-- this macro will produce: PRO FO78/195-->
-  <macro name="archive-largest-to-smallest">
-    <choose>
-      <if match="any" type="manuscript letter personal_communication graphic report">
-        <group delimiter=". ">
-          <text variable="archive"/>
-          <text text-case="capitalize-first" variable="archive_location"/>
-          <!-- this field is not present in Zotero and it is not entirely clear which entry from the extra field would map to this field -->
-          <!--          <text variable="archive-place"/>-->
-          <text variable="call-number"/>
-        </group>
-      </if>
-    </choose>
-  </macro>
-  <macro name="archive-note-largest-to-smallest">
-    <choose>
-      <if match="any" type="manuscript letter personal_communication graphic report">
-        <group delimiter=", ">
-          <text variable="archive"/>
-          <text text-case="capitalize-first" variable="archive_location"/>
-          <!-- this field is not present in Zotero and it is not entirely clear which entry from the extra field would map to this field -->
-          <!--          <text variable="archive-place"/>-->
-          <text variable="call-number"/>
-        </group>
-      </if>
     </choose>
   </macro>
   <macro name="issue-note-join-with-space">
@@ -1319,14 +1219,14 @@
   </macro>
   <macro name="access-note">
     <group delimiter=", ">
-      <!--<choose>
+      <choose>
         <if match="any" type="graphic report">
           <text macro="archive-note"/>
         </if>
         <else-if match="none" type="article-journal bill book chapter legal_case legislation motion_picture paper-conference">
           <text macro="archive-note"/>
         </else-if>
-      </choose>-->
+      </choose>
       <choose>
         <if match="none" variable="issued">
           <group delimiter=" ">
@@ -1341,9 +1241,6 @@
             <if variable="DOI">
               <text prefix="https://doi.org/" variable="DOI"/>
             </if>
-            <!-- remove non-sensical URLs. Just because they are there, I would not like to see every link referenced -->
-            <!-- exclude reference types -->
-            <else-if match="any" type="chapter"/>
             <else>
               <text variable="URL"/>
             </else>
@@ -1354,14 +1251,14 @@
   </macro>
   <macro name="access">
     <group delimiter=". ">
-      <!--<choose>
+      <choose>
         <if match="any" type="graphic report">
           <text macro="archive"/>
         </if>
         <else-if match="none" type="article-journal bill book chapter legal_case legislation motion_picture paper-conference">
           <text macro="archive"/>
         </else-if>
-      </choose>-->
+      </choose>
       <choose>
         <if match="none" variable="issued">
           <group delimiter=" ">
@@ -1412,54 +1309,26 @@
       </if>
     </choose>
   </macro>
-  <!-- macro for sorting primary sources -->
-  <macro name="reference-type-sort">
-    <choose>
-      <!-- archival documents -->
-      <if match="any" type="manuscript personal_communication">
-        <text value="1"/>
-      </if>
-      <!-- press -->
-      <else-if match="any" type="article-magazine article-newspaper">
-        <text value="2"/>
-      </else-if>
-      <!-- laws -->
-      <else-if match="any" type="bill legislation legal_case">
-        <text value="3"/>
-      </else-if>
-      <!-- everything else -->
-      <else>
-        <text value="20"/>
-      </else>
-    </choose>
-  </macro>
   <citation disambiguate-add-names="true" et-al-min="4" et-al-use-first="1">
     <layout delimiter="; " suffix=".">
       <choose>
-        <if position="subsequent">
+        <if position="ibid-with-locator">
           <group delimiter=", ">
-            <!-- information on archive first -->
-            <text macro="archive-note-largest-to-smallest"/>
-            <choose>
-              <if match="none" type="article-newspaper">
-                <text macro="contributors-short"/>
-              </if>
-            </choose>
+            <text term="ibid"/>
+            <text macro="point-locators-subsequent"/>
+          </group>
+        </if>
+        <else-if position="ibid">
+          <text term="ibid"/>
+        </else-if>
+        <else-if position="subsequent">
+          <group delimiter=", ">
+            <text macro="contributors-short"/>
             <group delimiter=" ">
               <group delimiter=", ">
-                <choose>
-                  <!-- (historical newspapers should not change depending on context) -->
-                  <if match="any" type="article-newspaper">
-                    <text macro="container-title-note"/>
-                    <text macro="locators-note-join-with-comma"/>
-                    <text macro="issue-note-join-with-comma"/>
-                  </if>
-                  <else>
-                    <text macro="title-short"/>
-                    <!--if title & author are the same: -->
-                    <text macro="date-disambiguate"/>
-                  </else>
-                </choose>
+                <text macro="title-short"/>
+                <!--if title & author are the same: -->
+                <text macro="date-disambiguate"/>
                 <text macro="case-locator-subsequent"/>
               </group>
               <text macro="case-pinpoint-subsequent"/>
@@ -1470,31 +1339,22 @@
               </if>
             </choose>
           </group>
-        </if>
+        </else-if>
         <else>
           <group delimiter=", ">
-            <!-- information on archive first -->
-            <text macro="archive-note-largest-to-smallest"/>
             <group delimiter=": ">
               <group delimiter=", ">
                 <group delimiter=" ">
                   <group delimiter=", ">
                     <group delimiter=" ">
                       <group delimiter=", ">
-                        <choose>
-                          <!-- remove too detailed information for periodicals, particularly newspapers -->
-                          <if match="any" type="article-newspaper"/>
-                          <else>
-                            <group delimiter=", ">
-                              <text macro="contributors-note"/>
-                              <text macro="title-note"/>
-                              <text macro="issue-map-graphic"/>
-                            </group>
-                          </else>
-                        </choose>
+                        <group delimiter=", ">
+                          <text macro="contributors-note"/>
+                          <text macro="title-note"/>
+                          <text macro="issue-map-graphic"/>
+                        </group>
                         <text macro="description-note"/>
                         <text macro="secondary-contributors-note"/>
-                        <!-- periodicals should use the short title only -->
                         <text macro="container-title-note"/>
                         <text macro="container-contributors-note"/>
                       </group>
@@ -1511,7 +1371,6 @@
               </group>
               <text macro="point-locators-join-with-colon"/>
             </group>
-            <!-- remove non-sensical URLs. Just because they are there, I would not like to see every link referenced -->
             <text macro="access-note"/>
           </group>
         </else>
@@ -1520,72 +1379,51 @@
   </citation>
   <bibliography entry-spacing="0" et-al-min="11" et-al-use-first="7" hanging-indent="true" subsequent-author-substitute="&#8212;&#8212;&#8212;">
     <sort>
-      <!-- private sort key -->
-      <key macro="reference-type-sort"/>
-      <!-- sort by archive? -->
-      <!--      <key macro="archive-note-largest-to-smallest"/>-->
-      <key macro="contributors-title-sort"/>
-      <!--      <key macro="contributors-sort"/>-->
-      <!--      <key macro="title-sort"/>-->
+      <key macro="contributors-sort"/>
+      <key variable="title"/>
       <key variable="genre"/>
       <key variable="issued"/>
     </sort>
     <layout suffix=".">
-      <choose>
-        <!-- letters and other archival material should not end up in the bibliography -->
-        <if match="any" type="personal_communication"/>
-        <else>
-          <group delimiter=". ">
-            <!-- debugging -->
-            <!--<text macro="title-sort"/>-->
-            <!-- information on archive first -->
-            <text macro="archive-largest-to-smallest"/>
-            <group delimiter=": ">
-              <group delimiter=", ">
+      <group delimiter=". ">
+        <group delimiter=": ">
+          <group delimiter=", ">
+            <group delimiter=" ">
+              <group delimiter=". ">
                 <group delimiter=" ">
-                  <group delimiter=". ">
-                    <group delimiter=" ">
-                      <group delimiter=", ">
-                        <group delimiter=". ">
-                          <group delimiter=". ">
-                            <choose>
-                              <!-- remove too detailed information for periodicals, particularly newspapers -->
-                              <if match="any" type="article-newspaper"/>
-                              <else>
-                                <text macro="contributors"/>
-                                <text macro="title"/>
-                                <text macro="issue-map-graphic"/>
-                              </else>
-                            </choose>
-                          </group>
-                          <text macro="description"/>
-                          <text macro="secondary-contributors"/>
-                          <group delimiter=", ">
-                            <text macro="container-title"/>
-                            <text macro="container-contributors"/>
-                          </group>
-                          <text macro="locators-join-with-period"/>
-                        </group>
-                        <text macro="locators-join-with-comma"/>
-                        <text macro="locators-chapter"/>
+                  <group delimiter=", ">
+                    <group delimiter=". ">
+                      <group delimiter=". ">
+                        <text macro="contributors"/>
+                        <text macro="title"/>
+                        <text macro="issue-map-graphic"/>
                       </group>
-                      <text macro="locators-join-with-space"/>
+                      <text macro="description"/>
+                      <text macro="secondary-contributors"/>
+                      <group delimiter=", ">
+                        <text macro="container-title"/>
+                        <text macro="container-contributors"/>
+                      </group>
+                      <text macro="locators-join-with-period"/>
                     </group>
-                    <text macro="collection-title"/>
-                    <text macro="issue-join-with-period"/>
+                    <text macro="locators-join-with-comma"/>
+                    <text macro="locators-chapter"/>
                   </group>
-                  <text macro="issue-join-with-space"/>
+                  <text macro="locators-join-with-space"/>
                 </group>
-                <text macro="issue-join-with-comma"/>
-                <text macro="locators-journal-join-with-comma"/>
-                <text macro="locators-newspaper"/>
+                <text macro="collection-title"/>
+                <text macro="issue-join-with-period"/>
               </group>
-              <text macro="locators-journal-join-with-colon"/>
+              <text macro="issue-join-with-space"/>
             </group>
-            <text macro="access"/>
+            <text macro="issue-join-with-comma"/>
+            <text macro="locators-journal-join-with-comma"/>
+            <text macro="locators-newspaper"/>
           </group>
-        </else>
-      </choose>
+          <text macro="locators-journal-join-with-colon"/>
+        </group>
+        <text macro="access"/>
+      </group>
     </layout>
   </bibliography>
 </style>
