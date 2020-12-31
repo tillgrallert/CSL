@@ -135,14 +135,28 @@
   </macro>
   <macro name="contributors-note">
     <group delimiter=" ">
-      <names variable="author">
-        <name and="text" delimiter=", " sort-separator=", "/>
-        <label form="short" prefix=", "/>
-        <substitute>
-          <names variable="editor"/>
-          <names variable="translator"/>
-        </substitute>
-      </names>
+      <choose>
+          <if type="personal_communication" match="any">
+              <names variable="author">
+                  <name and="text" delimiter=", " initialize-with=". " sort-separator=", "/>
+                  <label form="short" prefix=", "/>
+                  <substitute>
+                      <names variable="editor"/>
+                      <names variable="translator"/>
+                  </substitute>
+              </names>
+          </if>
+          <else>
+              <names variable="author">
+                  <name and="text" delimiter=", " sort-separator=", "/>
+                  <label form="short" prefix=", "/>
+                  <substitute>
+                      <names variable="editor"/>
+                      <names variable="translator"/>
+                  </substitute>
+              </names>
+          </else>
+      </choose>
       <text macro="recipient-note"/>
     </group>
   </macro>
@@ -1182,8 +1196,12 @@
           </else>
         </choose>
       </else-if>
-      <else-if type="article-newspaper">
-        <text macro="issued"/>
+        <else-if type="article-newspaper" match="any">
+            <text macro="issued"/>
+        </else-if>
+        <!-- originally, magazine articles carry place and publisher information. For brevity, I decided against this. -->
+      <else-if type="article-magazine" match="any">
+        <text macro="issued" prefix="(" suffix=")"/>
       </else-if>
       <else-if match="any" type="manuscript thesis speech">
         <group delimiter=", " prefix="(" suffix=")">
@@ -1435,6 +1453,9 @@
     </choose>
   </macro>
   <citation disambiguate-add-names="true" et-al-min="4" et-al-use-first="1">
+      <sort>
+          <key variable="issued"/>
+      </sort>
     <layout delimiter="; " suffix=".">
       <choose>
         <if position="ibid-with-locator">
