@@ -1538,7 +1538,14 @@
                   <text macro="issue-note-join-with-space"/>
                 </group>
                 <text macro="locators-newspaper"/>
-                <text macro="point-locators-join-with-comma"/>
+                <!-- due to my inconsistent use of page numbers for newspapers, these should be removed here -->
+                <choose>
+                  <if match="any" type="article-newspaper"/>
+                  <else>
+                    <text macro="point-locators-join-with-comma"/>
+                  </else>
+                </choose>
+                <!-- <text macro="point-locators-join-with-comma"/> -->
               </group>
               <text macro="point-locators-join-with-colon"/>
             </group>
