@@ -285,7 +285,7 @@
   </macro>
   <macro name="locators">
     <choose>
-      <if type="article-journal">
+      <if match="any" type="article-journal article-magazine">
         <choose>
           <if variable="volume">
             <text prefix=" " variable="volume"/>
