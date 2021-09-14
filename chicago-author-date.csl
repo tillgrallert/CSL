@@ -621,6 +621,11 @@
   </macro>
   <citation after-collapse-delimiter="; " collapse="year" disambiguate-add-givenname="true" disambiguate-add-names="true" disambiguate-add-year-suffix="true" et-al-min="4" et-al-use-first="1"
     givenname-disambiguation-rule="primary-name">
+    <sort>
+      <key macro="contributors"/>
+      <key variable="issued"/>
+      <key variable="title"/>
+    </sort>
     <layout delimiter="; " prefix="(" suffix=")">
       <group delimiter=", ">
         <choose>
