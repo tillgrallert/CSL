@@ -59,35 +59,47 @@
             <group>
               <names variable="container-author reviewed-author">
                 <label form="verb-short" suffix=" " text-case="lowercase"/>
-                <name and="text" delimiter=", "/>
+                <name and="text" delimiter=", " initialize-with=". "/>
               </names>
             </group>
           </if>
         </choose>
       </group>
-      <names delimiter=", " variable="editor translator">
-        <label form="verb-short" suffix=" " text-case="lowercase"/>
-        <name and="text" delimiter=", "/>
-      </names>
+      <group delimiter=", ">
+        <choose>
+          <if match="any" type="article-journal article-magazine article-newspaper">
+            <names delimiter=", " variable="translator">
+              <label form="verb-short" suffix=" " text-case="lowercase"/>
+              <name and="text" delimiter=", " initialize-with=". "/>
+            </names>
+          </if>
+          <else>
+            <names delimiter=", " variable="editor translator">
+              <label form="verb-short" suffix=" " text-case="lowercase"/>
+              <name and="text" delimiter=", " initialize-with=". "/>
+            </names>
+          </else>
+        </choose>
+      </group>
     </group>
   </macro>
   <macro name="secondary-contributors-note">
     <choose>
-      <if match="none" type="chapter entry-dictionary entry-encyclopedia paper-conference">
+      <if match="none" type="article-journal chapter entry-dictionary entry-encyclopedia paper-conference">
         <text macro="editor-translator"/>
       </if>
     </choose>
   </macro>
   <macro name="container-contributors-note">
     <choose>
-      <if match="any" type="chapter entry-dictionary entry-encyclopedia paper-conference">
+      <if match="any" type="article-journal chapter entry-dictionary entry-encyclopedia paper-conference">
         <text macro="editor-translator"/>
       </if>
     </choose>
   </macro>
   <macro name="secondary-contributors">
     <choose>
-      <if match="none" type="chapter entry-dictionary entry-encyclopedia paper-conference">
+      <if match="none" type="article-journal chapter entry-dictionary entry-encyclopedia paper-conference">
         <names delimiter=". " variable="editor translator">
           <label form="verb" suffix=" " text-case="capitalize-first"/>
           <name and="text" delimiter=", "/>
