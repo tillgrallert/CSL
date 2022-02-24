@@ -401,24 +401,22 @@
                 </group>
             </if>
             <else-if type="legal_case">
-                <text prefix=", " variable="volume"/>
+                <text variable="volume"/>
                 <text prefix=" " variable="container-title"/>
                 <text prefix=" " variable="page"/>
                 <text prefix=", " variable="locator"/>
             </else-if>
             <else-if match="any" type="bill book chapter graphic legal_case legislation motion_picture paper-conference report song">
-                <group delimiter=", " prefix=", ">
+                <group delimiter=", ">
                     <text macro="volume-note"/>
                     <text macro="edition-note"/>
                 </group>
             </else-if>
-            <else-if match="any" type="article-magazine">
-                
-            </else-if>
+            <else-if match="any" type="article-magazine"> </else-if>
             <else-if match="any" type="article-newspaper">
-               <group>
-                   <text prefix="no. " variable="issue"/>
-               </group>  
+                <group>
+                    <text prefix="no. " variable="issue"/>
+                </group>
             </else-if>
         </choose>
     </macro>
@@ -555,7 +553,7 @@
             </else-if>
             <else-if type="legal_case"/>
             <else>
-                <group prefix=" ">
+                <group prefix=", ">
                     <choose>
                         <if locator="page" match="none">
                             <label form="short" suffix=" " variable="locator"/>
@@ -787,8 +785,8 @@
                     <group delimiter=", ">
                         <text macro="contributors-short"/>
                         <text macro="title-short"/>
+                        <text macro="point-locators-subsequent"/>
                     </group>
-                    <text macro="point-locators-subsequent" prefix=" "/>
                 </else-if>
                 <else>
                     <group delimiter=", ">
@@ -796,20 +794,23 @@
                         <text macro="title-note"/>
                         <text macro="description-note"/>
                         <text macro="secondary-contributors-note"/>
+                        <text macro="container-title-note"/>
+                        <!-- the imprint is not separated by commas -->
+                        <group delimiter=" ">
+                            <text macro="container-contributors-note"/>
+                            <text macro="locators-note"/>
+                            <!--<text macro="collection-title" prefix=", "/>-->
+                            <text macro="issue-note"/>
+                            <text macro="locators-newspaper"/>
+                            <text macro="point-locators"/>
+                        </group>
+                        <!-- remove URL for some types -->
+                        <choose>
+                            <if match="none" type="book chapter">
+                                <text macro="access-note"/>
+                            </if>
+                        </choose>
                     </group>
-                    <text macro="container-title-note" prefix=" " suffix=". "/>
-                    <text macro="container-contributors-note"/>
-                    <text macro="locators-note"/>
-                    <!--<text macro="collection-title" prefix=", "/>-->
-                    <text macro="issue-note"/>
-                    <text macro="locators-newspaper" prefix=", "/>
-                    <text macro="point-locators"/>
-                    <!-- remove URL for some types -->
-                    <choose>
-                        <if match="none" type="book chapter">
-                            <text macro="access-note" prefix=", "/>
-                        </if>
-                    </choose>
                 </else>
             </choose>
         </layout>
