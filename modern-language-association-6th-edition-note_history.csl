@@ -321,7 +321,7 @@
     <macro name="container-title-note">
         <choose>
             <if match="any" type="chapter paper-conference">
-                <text term="in" text-case="lowercase"/>
+                <text suffix=" " term="in" text-case="lowercase"/>
             </if>
         </choose>
         <choose>
