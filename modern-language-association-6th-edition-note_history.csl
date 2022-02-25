@@ -304,6 +304,23 @@
             </else>
         </choose>
     </macro>
+    <macro name="title-sort">
+        <choose>
+            <if match="any" type="article-newspaper">
+                <choose>
+                    <if match="any" variable="title-short">
+                        <text variable="title-short"/>
+                    </if>
+                    <else>
+                        <text variable="container-title"/>
+                    </else>
+                </choose>
+            </if>
+            <else>
+                <!--                <text variable="title"/>-->
+            </else>
+        </choose>
+    </macro>
     <macro name="description-note">
         <group delimiter=", ">
             <text macro="interviewer-note"/>
@@ -533,6 +550,17 @@
             <else>
                 <text form="short" term="no date"/>
             </else>
+        </choose>
+    </macro>
+    <macro name="issued-sort">
+        <choose>
+            <if match="any" type="article-newspaper personal_communication">
+                <date variable="issued">
+                    <date-part name="year"/>
+                    <date-part form="numeric" name="month" prefix="-"/>
+                    <date-part name="day" prefix="-"/>
+                </date>
+            </if>
         </choose>
     </macro>
     <macro name="point-locators-subsequent">
@@ -803,7 +831,40 @@
             <text macro="issued"/>
         </group>
     </macro>
-    <citation disambiguate-add-names="true" et-al-min="3" et-al-use-first="1">
+    <macro name="sort-primary-sources-only">
+        <choose>
+            <if match="any" type="article-newspaper article-magazine">
+                <choose>
+                    <if match="any" variable="title-short">
+                        <text variable="title-short"/>
+                    </if>
+                    <else>
+                        <text variable="container-title"/>
+                    </else>
+                </choose>
+            </if>
+            <else>
+                <text macro="archive-note-largest-to-smallest"/>
+            </else>
+        </choose>
+        <choose>
+            <if match="any" type="article-newspaper personal_communication">
+                <date variable="issued">
+                    <date-part name="year" prefix=", "/>
+                    <date-part form="numeric" name="month" prefix="-"/>
+                    <date-part name="day" prefix="-"/>
+                </date>
+            </if>
+        </choose>
+
+    </macro>
+    <citation disambiguate-add-names="true" et-al-min="4" et-al-use-first="1">
+        <sort>
+            <!--<key macro="contributors-sort"/>-->
+            <!--<key macro="title-sort"/>
+            <key macro="issued-sort"/>-->
+            <key macro="sort-primary-sources-only"/>
+        </sort>
         <layout delimiter="; " suffix=".">
             <choose>
                 <if position="ibid-with-locator">
