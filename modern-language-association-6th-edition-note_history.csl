@@ -31,6 +31,7 @@
         <terms>
             <term form="verb-short" name="editor">ed.</term>
             <term form="verb-short" name="translator">trans.</term>
+            <term form="short" name="version">v.</term>
         </terms>
     </locale>
     <macro name="editor-translator">
@@ -154,14 +155,27 @@
         </names>
     </macro>
     <macro name="contributors-note">
-        <names variable="author">
-            <name and="text" delimiter=", " sort-separator=", "/>
-            <substitute>
-                <text macro="editor-note"/>
-                <text macro="translator-note"/>
-            </substitute>
-        </names>
-        <text macro="recipient-note"/>
+        <choose>
+            <if match="any" type="personal_communication">
+                <names variable="author">
+                    <name and="text" delimiter=", " form="short"/>
+                    <substitute>
+                        <text macro="editor-note"/>
+                        <text macro="translator-note"/>
+                    </substitute>
+                </names>
+                <text macro="recipient-note"/>
+            </if>
+            <else>
+                <names variable="author">
+                    <name and="text" delimiter=", "/>
+                    <substitute>
+                        <text macro="editor-note"/>
+                        <text macro="translator-note"/>
+                    </substitute>
+                </names>
+            </else>
+        </choose>
     </macro>
     <macro name="editor">
         <names variable="editor">
@@ -242,7 +256,7 @@
             <if match="none" variable="title">
                 <text variable="genre"/>
             </if>
-            <else-if match="any" type="bill book graphic legal_case legislation motion_picture report song">
+            <else-if match="any" type="bill book dataset graphic legal_case legislation motion_picture report song">
                 <text font-style="italic" variable="title"/>
             </else-if>
             <else>
@@ -325,6 +339,7 @@
             </if>
         </choose>
         <choose>
+            <!-- historical periodicals should reference only the short title -->
             <if match="any" type="article-magazine article-newspaper">
                 <choose>
                     <if variable="title-short">
@@ -335,7 +350,7 @@
                     </else>
                 </choose>
             </if>
-            <else-if match="none" type="legal_case">
+            <else-if match="none" type="bill legislation legal_case">
                 <text font-style="italic" variable="container-title"/>
             </else-if>
         </choose>
@@ -394,7 +409,7 @@
     </macro>
     <macro name="locators-note">
         <choose>
-            <if type="article-journal">
+            <if match="any" type="article-journal article-magazine">
                 <group delimiter=".">
                     <text prefix=" " variable="volume"/>
                     <text variable="issue"/>
@@ -412,10 +427,9 @@
                     <text macro="edition-note"/>
                 </group>
             </else-if>
-            <else-if match="any" type="article-magazine"> </else-if>
             <else-if match="any" type="article-newspaper">
                 <group>
-                    <text prefix="no. " variable="issue"/>
+                    <text variable="issue"/>
                 </group>
             </else-if>
         </choose>
@@ -498,6 +512,12 @@
                     </else-if>
                     <else-if match="any" type="article-journal bill book chapter graphic legal_case legislation motion_picture paper-conference report song thesis">
                         <date variable="issued">
+                            <date-part name="year"/>
+                        </date>
+                    </else-if>
+                    <else-if match="any" type="article-magazine">
+                        <date variable="issued">
+                            <date-part form="short" name="month" suffix=" "/>
                             <date-part name="year"/>
                         </date>
                     </else-if>
@@ -622,7 +642,7 @@
     </macro>
     <macro name="issue-note">
         <choose>
-            <if match="any" type="article-journal legal_case">
+            <if match="any" type="article-journal article-magazine legal_case">
                 <text macro="issued" prefix=" (" suffix=")"/>
             </if>
             <else-if type="thesis">
@@ -767,6 +787,12 @@
             </if>
         </choose>
     </macro>
+    <macro name="version-note">
+        <group delimiter=" ">
+            <text form="short" term="version"/>
+            <text variable="version"/>
+        </group>
+    </macro>
     <macro name="periodical-note">
         <group delimiter=", ">
             <!-- periodical title -->
@@ -807,6 +833,7 @@
                         <text macro="archive-note-largest-to-smallest"/>
                         <text macro="contributors-note"/>
                         <text macro="title-note"/>
+                        <text macro="version-note"/>
                         <text macro="description-note"/>
                         <text macro="secondary-contributors-note"/>
                         <text macro="container-title-note"/>
