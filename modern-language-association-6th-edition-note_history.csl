@@ -257,10 +257,10 @@
                 <text variable="genre"/>
             </if>
             <else-if match="any" type="bill book dataset graphic legal_case legislation motion_picture report song">
-                <text font-style="italic" variable="title"/>
+                <text font-style="italic" variable="title" text-case="title"/>
             </else-if>
             <else>
-                <text quotes="true" variable="title"/>
+                <text quotes="true" variable="title" text-case="title"/>
             </else>
         </choose>
     </macro>
@@ -274,10 +274,10 @@
                 </choose>
             </if>
             <else-if match="any" type="bill book graphic legal_case legislation motion_picture report song">
-                <text font-style="italic" variable="title"/>
+                <text font-style="italic" variable="title" text-case="title"/>
             </else-if>
             <else>
-                <text quotes="true" variable="title"/>
+                <text quotes="true" variable="title" text-case="title"/>
             </else>
         </choose>
     </macro>
@@ -297,10 +297,10 @@
                 </choose>
             </if>
             <else-if match="any" type="bill book graphic legal_case legislation motion_picture report song">
-                <text font-style="italic" form="short" variable="title"/>
+                <text font-style="italic" form="short" variable="title" text-case="title"/>
             </else-if>
             <else>
-                <text form="short" quotes="true" variable="title"/>
+                <text form="short" quotes="true" variable="title" text-case="title"/>
             </else>
         </choose>
     </macro>
@@ -363,12 +363,12 @@
                         <text font-style="italic" variable="title-short"/>
                     </if>
                     <else>
-                        <text font-style="italic" variable="container-title"/>
+                        <text font-style="italic" variable="container-title" text-case="title"/>
                     </else>
                 </choose>
             </if>
             <else-if match="none" type="bill legislation legal_case">
-                <text font-style="italic" variable="container-title"/>
+                <text font-style="italic" variable="container-title" text-case="title"/>
             </else-if>
         </choose>
     </macro>
@@ -380,7 +380,7 @@
         </choose>
         <choose>
             <if match="none" type="legal_case">
-                <text font-style="italic" variable="container-title"/>
+                <text font-style="italic" variable="container-title" text-case="title"/>
             </if>
         </choose>
     </macro>
@@ -434,7 +434,7 @@
             </if>
             <else-if type="legal_case">
                 <text variable="volume"/>
-                <text prefix=" " variable="container-title"/>
+                <text prefix=" " variable="container-title" text-case="title"/>
                 <text prefix=" " variable="page"/>
                 <text prefix=", " variable="locator"/>
             </else-if>
@@ -461,7 +461,7 @@
             </if>
             <else-if type="legal_case">
                 <text prefix=", " variable="volume"/>
-                <text prefix=" " variable="container-title"/>
+                <text prefix=" " variable="container-title" text-case="title"/>
                 <text prefix=" " variable="page"/>
             </else-if>
             <else-if match="any" type="bill book graphic legal_case legislation motion_picture report song">
