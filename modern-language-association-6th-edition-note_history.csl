@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<style class="note" demote-non-dropping-particle="sort-only" version="1.0" xmlns="http://purl.org/net/xbiblio/csl">
+<style class="note" demote-non-dropping-particle="sort-only" version="1.0.2" xmlns="http://purl.org/net/xbiblio/csl">
     <info>
         <title>Modern Language Association 6th edition (note)</title>
         <title-short>MLA</title-short>
@@ -27,11 +27,19 @@
         <updated>2017-12-06T03:34:05+00:00</updated>
         <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     </info>
-    <locale>
+    <locale xml:lang="en">
         <terms>
             <term form="verb-short" name="editor">ed.</term>
             <term form="verb-short" name="translator">trans.</term>
             <term form="short" name="version">v.</term>
+            <term form="short" name="volume">
+                <single>vol.</single>
+                <multiple>vols</multiple>
+            </term>
+            <term name="volume">
+                <single>volume</single>
+                <multiple>volumes</multiple>
+            </term>
         </terms>
     </locale>
     <macro name="editor-translator">
@@ -257,10 +265,10 @@
                 <text variable="genre"/>
             </if>
             <else-if match="any" type="bill book dataset graphic legal_case legislation motion_picture report song">
-                <text font-style="italic" variable="title" text-case="title"/>
+                <text font-style="italic" text-case="title" variable="title"/>
             </else-if>
             <else>
-                <text quotes="true" variable="title" text-case="title"/>
+                <text quotes="true" text-case="title" variable="title"/>
             </else>
         </choose>
     </macro>
@@ -274,10 +282,10 @@
                 </choose>
             </if>
             <else-if match="any" type="bill book graphic legal_case legislation motion_picture report song">
-                <text font-style="italic" variable="title" text-case="title"/>
+                <text font-style="italic" text-case="title" variable="title"/>
             </else-if>
             <else>
-                <text quotes="true" variable="title" text-case="title"/>
+                <text quotes="true" text-case="title" variable="title"/>
             </else>
         </choose>
     </macro>
@@ -297,10 +305,10 @@
                 </choose>
             </if>
             <else-if match="any" type="bill book graphic legal_case legislation motion_picture report song">
-                <text font-style="italic" form="short" variable="title" text-case="title"/>
+                <text font-style="italic" form="short" text-case="title" variable="title"/>
             </else-if>
             <else>
-                <text form="short" quotes="true" variable="title" text-case="title"/>
+                <text form="short" quotes="true" text-case="title" variable="title"/>
             </else>
         </choose>
     </macro>
@@ -317,8 +325,7 @@
                 </choose>
             </if>
             <else>
-                <!--                <text variable="title"/>-->
-            </else>
+                <!--                <text variable="title"/>--> </else>
         </choose>
     </macro>
     <macro name="description-note">
@@ -363,12 +370,12 @@
                         <text font-style="italic" variable="title-short"/>
                     </if>
                     <else>
-                        <text font-style="italic" variable="container-title" text-case="title"/>
+                        <text font-style="italic" text-case="title" variable="container-title"/>
                     </else>
                 </choose>
             </if>
             <else-if match="none" type="bill legislation legal_case">
-                <text font-style="italic" variable="container-title" text-case="title"/>
+                <text font-style="italic" text-case="title" variable="container-title"/>
             </else-if>
         </choose>
     </macro>
@@ -380,7 +387,7 @@
         </choose>
         <choose>
             <if match="none" type="legal_case">
-                <text font-style="italic" variable="container-title" text-case="title"/>
+                <text font-style="italic" text-case="title" variable="container-title"/>
             </if>
         </choose>
     </macro>
@@ -434,7 +441,7 @@
             </if>
             <else-if type="legal_case">
                 <text variable="volume"/>
-                <text prefix=" " variable="container-title" text-case="title"/>
+                <text prefix=" " text-case="title" variable="container-title"/>
                 <text prefix=" " variable="page"/>
                 <text prefix=", " variable="locator"/>
             </else-if>
@@ -461,7 +468,7 @@
             </if>
             <else-if type="legal_case">
                 <text prefix=", " variable="volume"/>
-                <text prefix=" " variable="container-title" text-case="title"/>
+                <text prefix=" " text-case="title" variable="container-title"/>
                 <text prefix=" " variable="page"/>
             </else-if>
             <else-if match="any" type="bill book graphic legal_case legislation motion_picture report song">
@@ -552,16 +559,13 @@
             </else>
         </choose>
     </macro>
-    <macro name="issued-sort">
-        <choose>
-            <if match="any" type="article-newspaper personal_communication">
-                <date variable="issued">
-                    <date-part name="year"/>
-                    <date-part form="numeric" name="month" prefix="-"/>
-                    <date-part name="day" prefix="-"/>
-                </date>
-            </if>
-        </choose>
+    <macro name="issued-iso">
+<!--        <date form="numeric" format="year-month-day" variable="issued"/>-->
+        <date variable="issued">
+            <date-part name="year" form="long"/>
+            <date-part name="month" form="numeric-leading-zeros" prefix="-"/>
+            <date-part name="day" form="numeric-leading-zeros" prefix="-"/>
+        </date>
     </macro>
     <macro name="point-locators-subsequent">
         <group>
@@ -668,7 +672,7 @@
             </if>
         </choose>
     </macro>
-    <macro name="issue-note">
+    <macro name="issued-note">
         <choose>
             <if match="any" type="article-journal article-magazine legal_case">
                 <text macro="issued" prefix=" (" suffix=")"/>
@@ -821,7 +825,8 @@
             <text variable="version"/>
         </group>
     </macro>
-    <macro name="periodical-note">
+    <!-- static citations -->
+    <macro name="periodical-static">
         <group delimiter=", ">
             <!-- periodical title -->
             <text macro="container-title-note"/>
@@ -831,18 +836,80 @@
             <text macro="issued"/>
         </group>
     </macro>
+    <macro name="archival-static">
+        <group delimiter=", ">
+            <text macro="archive-note-largest-to-smallest"/>
+            <choose>
+                <if match="all" variable="publisher-place issue">
+                    <group delimiter=" ">
+                        <text variable="publisher-place"/>
+                        <text variable="issue"/>
+                    </group>
+                </if>
+                <else-if match="all" variable="publisher-place collection-title collection-number">
+                    <group delimiter=" ">
+                        <text variable="publisher-place"/>
+                        <text variable="collection-title"/>
+                        <text variable="collection-number"/>
+                    </group>
+                </else-if>
+            </choose>
+            <text variable="genre"/>
+            <!-- problem: undocumented (?) behaviour that in sequences of multiple references with the same author-recipient combination, this is only present in the first reference -->
+            <text macro="contributors-note"/>
+            <choose>
+                <if match="all" variable="publisher-place issue"/>
+                <else>
+                    <text macro="title-note"/>
+                </else>
+            </choose>
+            <text macro="issued-note"/>
+            <!--<text macro="version-note"/>
+            <text macro="description-note"/>
+            <text macro="secondary-contributors-note"/>
+            <text macro="container-title-note"/>
+            <!-\- the imprint is not separated by commas -\->
+            <group delimiter=" ">
+                <text macro="container-contributors-note"/>
+                <!-\- there is a problem here. If there is a locators-note, it should be prefixed by a comma -\->
+                <choose>
+                    <if match="all" variable="editor volume">
+                        <text term=", "/>
+                    </if>
+                </choose>
+                <text macro="locators-note"/>
+                <!-\-<text macro="collection-title" prefix=", "/>-\->
+                <text macro="issued-note"/>
+                <text macro="locators-newspaper"/>
+                <text macro="point-locators"/>
+            </group>-->
+        </group>
+    </macro>
     <macro name="sort-primary-sources-only">
         <choose>
             <if match="any" type="article-newspaper article-magazine">
-                <choose>
-                    <if match="any" variable="title-short">
-                        <text variable="title-short"/>
-                    </if>
-                    <else>
-                        <text variable="container-title"/>
-                    </else>
-                </choose>
+                <group delimiter=", ">
+                    <choose>
+                        <if match="any" variable="title-short">
+                            <text variable="title-short"/>
+                        </if>
+                        <else>
+                            <text variable="container-title"/>
+                        </else>
+                    </choose>
+                    <!-- date -->
+                    <text macro="issued-iso"/>
+                </group>
             </if>
+            <else-if match="any" type="manuscript letter personal_communication">
+                <text macro="issued-iso"/>
+                <!--<group delimiter=", ">
+                    <text variable="archive"/>
+                    <text text-case="capitalize-first" variable="archive_location"/>
+                    <!-\- date -\->
+                    <text macro="issued-iso"/>
+                </group>-->
+            </else-if>
             <else>
                 <text macro="archive-note-largest-to-smallest"/>
             </else>
@@ -856,13 +923,12 @@
                 </date>
             </if>
         </choose>
-
     </macro>
-    <citation disambiguate-add-names="true" et-al-min="4" et-al-use-first="1">
+    <citation collapse="year" disambiguate-add-givenname="true" disambiguate-add-names="true" disambiguate-add-year-suffix="false" et-al-min="4" et-al-use-first="2"
+        givenname-disambiguation-rule="primary-name-with-initials">
         <sort>
             <!--<key macro="contributors-sort"/>-->
-            <!--<key macro="title-sort"/>
-            <key macro="issued-sort"/>-->
+            <!--<key macro="title-sort"/>-->
             <key macro="sort-primary-sources-only"/>
         </sort>
         <layout delimiter="; " suffix=".">
@@ -878,8 +944,11 @@
                 </else-if>
                 <!-- periodicals: reference does not change between first and subsequent -->
                 <else-if match="any" type="article-newspaper">
-                    <text macro="periodical-note"/>
+                    <text macro="periodical-static"/>
                     <text macro="point-locators"/>
+                </else-if>
+                <else-if match="any" type="personal_communication document">
+                    <text macro="archival-static"/>
                 </else-if>
                 <else-if position="subsequent">
                     <group delimiter=", ">
@@ -901,9 +970,15 @@
                         <!-- the imprint is not separated by commas -->
                         <group delimiter=" ">
                             <text macro="container-contributors-note"/>
+                            <!-- there is a problem here. If there is a locators-note, it should be prefixed by a comma -->
+                            <choose>
+                                <if match="all" variable="editor volume">
+                                    <text term=", "/>
+                                </if>
+                            </choose>
                             <text macro="locators-note"/>
                             <!--<text macro="collection-title" prefix=", "/>-->
-                            <text macro="issue-note"/>
+                            <text macro="issued-note"/>
                             <text macro="locators-newspaper"/>
                             <text macro="point-locators"/>
                         </group>
