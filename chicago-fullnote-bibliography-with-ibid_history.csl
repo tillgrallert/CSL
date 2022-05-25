@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style class="note" demote-non-dropping-particle="display-and-sort" page-range-format="chicago" version="1.0" xmlns="http://purl.org/net/xbiblio/csl">
-    <!-- I need to update this style with better support for newspaper and magazine articles, that also include volume and issue information if available. This is done in the point-locator macros -->
+    <!-- TO DO:
+        - software: add version information
+            - software is mapped to CSL type dataset
+     -->
     <info>
         <title>Chicago Manual of Style 17th edition (full note, with Ibid.)</title>
         <id>http://www.zotero.org/styles/chicago-fullnote-bibliography-with-ibid</id>
@@ -224,7 +227,7 @@
             <text macro="recipient-short"/>
         </group>
     </macro>
-    <macro name="contributors-sort">
+    <macro name="sort-contributors">
         <names variable="author">
             <name and="text" delimiter=", " delimiter-precedes-last="always" name-as-sort-order="all" sort-separator=", "/>
             <substitute>
@@ -234,7 +237,7 @@
             </substitute>
         </names>
     </macro>
-    <macro name="contributors-title-sort">
+    <macro name="sort-contributors-title">
         <group delimiter=", ">
             <choose>
                 <!-- press -->
@@ -252,7 +255,7 @@
             </names>
         </group>
     </macro>
-    <macro name="title-sort">
+    <macro name="sort-title">
         <choose>
             <!-- press -->
             <if match="any" type="article-magazine article-newspaper">
@@ -286,8 +289,10 @@
             <if match="none" variable="title">
                 <text variable="genre"/>
             </if>
-            <else-if match="any" type="book graphic map motion_picture song">
+            <else-if match="any" type="book dataset graphic map motion_picture song">
                 <text font-style="italic" text-case="title" variable="title"/>
+                <!-- add translated title -->
+                <text macro="translated-title" prefix=" "/>
                 <group delimiter=" " prefix=", ">
                     <text term="version"/>
                     <text variable="version"/>
@@ -301,6 +306,8 @@
             </else-if>
             <else>
                 <text quotes="true" text-case="title" variable="title"/>
+                <!-- add translated title -->
+                <text macro="translated-title" prefix=" "/>
             </else>
         </choose>
     </macro>
@@ -315,6 +322,8 @@
             </if>
             <else-if match="any" type="book graphic motion_picture song">
                 <text font-style="italic" text-case="title" variable="title"/>
+                <!-- add translated title -->
+                <text macro="translated-title" prefix=" "/>
                 <group delimiter=" " prefix=" (" suffix=")">
                     <text term="version"/>
                     <text variable="version"/>
@@ -330,7 +339,9 @@
                 </group>
             </else-if>
             <else-if match="any" type="bill legislation legal_case interview patent">
-                <text variable="title"/>
+                <text variable="title" text-case="title"/>
+                <!-- add translated title -->
+                <text macro="translated-title" prefix=" "/>
             </else-if>
             <else>
                 <text quotes="true" text-case="title" variable="title"/>
@@ -1430,6 +1441,15 @@
             </if>
         </choose>
     </macro>
+    <!-- custom macros -->
+    <macro name="translated-title">
+    <!-- currently, Zotero does not support translated titles. https://forums.zotero.org/discussion/90060/style-request-chicago-translated-titles-of-cited-works suggested to use "original-title" in the extra field for this purpose. -->
+    <choose>
+      <if match="any" variable="original-title">
+        <text prefix="[" suffix="]" text-case="title" variable="original-title"/>
+      </if>
+    </choose>
+  </macro>
     <!-- macros for stable, i.e. context-independent citations -->
     <macro name="citation-stable">
         <choose>
@@ -1463,7 +1483,7 @@
         </group>
     </macro>
     <!-- macro for sorting primary sources -->
-    <macro name="reference-type-sort">
+    <macro name="sort-reference-type">
         <choose>
             <!-- archival documents -->
             <if match="any" type="manuscript personal_communication">
@@ -1625,12 +1645,12 @@
     <bibliography entry-spacing="0" et-al-min="11" et-al-use-first="7" hanging-indent="true" subsequent-author-substitute="&#8212;&#8212;&#8212;">
         <sort>
             <!-- private sort key -->
-            <key macro="reference-type-sort"/>
+            <key macro="sort-reference-type"/>
             <!-- sort by archive? -->
             <!--      <key macro="archive-note-largest-to-smallest"/>-->
-            <key macro="contributors-title-sort"/>
-            <!--      <key macro="contributors-sort"/>-->
-            <!--      <key macro="title-sort"/>-->
+            <key macro="sort-contributors-title"/>
+            <!--      <key macro="sort-contributors"/>-->
+            <!--      <key macro="sort-title"/>-->
             <key variable="genre"/>
             <key variable="issued"/>
         </sort>
@@ -1640,7 +1660,7 @@
                 <if match="none" type="personal_communication article-newspaper article-magazine letter manuscript">
                     <group delimiter=". ">
                         <!-- debugging -->
-                        <!--<text macro="title-sort"/>-->
+                        <!--<text macro="sort-title"/>-->
                         <!-- information on archive first -->
                         <text macro="archive-largest-to-smallest"/>
                         <group delimiter=": ">
