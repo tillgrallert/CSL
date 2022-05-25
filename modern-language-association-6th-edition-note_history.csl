@@ -560,11 +560,11 @@
         </choose>
     </macro>
     <macro name="issued-iso">
-<!--        <date form="numeric" format="year-month-day" variable="issued"/>-->
+        <!--        <date form="numeric" format="year-month-day" variable="issued"/>-->
         <date variable="issued">
-            <date-part name="year" form="long"/>
-            <date-part name="month" form="numeric-leading-zeros" prefix="-"/>
-            <date-part name="day" form="numeric-leading-zeros" prefix="-"/>
+            <date-part form="long" name="year"/>
+            <date-part form="numeric-leading-zeros" name="month" prefix="-"/>
+            <date-part form="numeric-leading-zeros" name="day" prefix="-"/>
         </date>
     </macro>
     <macro name="point-locators-subsequent">
