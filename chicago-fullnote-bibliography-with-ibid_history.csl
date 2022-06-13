@@ -307,7 +307,7 @@
                 <!-- add translated title -->
                 <text macro="translated-title" prefix=" "/>
                 <group delimiter=" " prefix=", ">
-                    <text term="version" form="short"/>
+                    <text form="short" term="version"/>
                     <text variable="version"/>
                 </group>
             </else-if>
@@ -338,7 +338,7 @@
                 <!-- add translated title -->
                 <text macro="translated-title" prefix=" "/>
                 <group delimiter=" " prefix=" (" suffix=")">
-                    <text term="version" form="short"/>
+                    <text form="short" term="version"/>
                     <text variable="version"/>
                 </group>
             </else-if>
@@ -352,7 +352,7 @@
                 </group>
             </else-if>
             <else-if match="any" type="bill legislation legal_case interview patent">
-                <text variable="title" text-case="title"/>
+                <text text-case="title" variable="title"/>
                 <!-- add translated title -->
                 <text macro="translated-title" prefix=" "/>
             </else-if>
@@ -1272,12 +1272,12 @@
                 <group delimiter=", " prefix="(" suffix=")">
                     <text macro="event-note"/>
                     <!-- <group delimiter="; "> -->
-                        <!-- <text macro="originally-published"/> -->
-                        <!-- <group delimiter=", "> -->
-                            <!-- the "reprint" note drives me crazy -->
-                            <!-- <text macro="reprint-note"/> -->
-                            <text macro="publisher"/>
-                        <!-- </group> -->
+                    <!-- <text macro="originally-published"/> -->
+                    <!-- <group delimiter=", "> -->
+                    <!-- the "reprint" note drives me crazy -->
+                    <!-- <text macro="reprint-note"/> -->
+                    <text macro="publisher"/>
+                    <!-- </group> -->
                     <!-- </group> -->
                     <group delimiter="; ">
                         <text macro="issued"/>
@@ -1488,13 +1488,13 @@
     </macro>
     <!-- custom macros -->
     <macro name="translated-title">
-    <!-- currently, Zotero does not support translated titles. https://forums.zotero.org/discussion/90060/style-request-chicago-translated-titles-of-cited-works suggested to use "original-title" in the extra field for this purpose. -->
-    <choose>
-      <if match="any" variable="original-title">
-        <text prefix="[" suffix="]" text-case="title" variable="original-title"/>
-      </if>
-    </choose>
-  </macro>
+        <!-- currently, Zotero does not support translated titles. https://forums.zotero.org/discussion/90060/style-request-chicago-translated-titles-of-cited-works suggested to use "original-title" in the extra field for this purpose. -->
+        <choose>
+            <if match="any" variable="original-title">
+                <text prefix="[" suffix="]" text-case="title" variable="original-title"/>
+            </if>
+        </choose>
+    </macro>
     <!-- macros for stable, i.e. context-independent citations -->
     <macro name="citation-stable">
         <choose>
@@ -1521,9 +1521,9 @@
                 <text macro="archive-note-largest-to-smallest"/>
                 <text macro="contributors-note"/>
                 <text macro="title-note"/>
-<!--                <text macro="issue-map-graphic"/>-->
+                <!--                <text macro="issue-map-graphic"/>-->
             </group>
-<!--            <text macro="issue-note-join-with-space"/>-->
+            <!--            <text macro="issue-note-join-with-space"/>-->
             <text macro="issue-note"/>
         </group>
     </macro>
