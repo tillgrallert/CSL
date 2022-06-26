@@ -826,7 +826,7 @@
         </group>
     </macro>
     <!-- static citations -->
-    <macro name="periodical-static">
+    <macro name="citation-newspaper">
         <group delimiter=", ">
             <!-- periodical title -->
             <text macro="container-title-note"/>
@@ -836,7 +836,7 @@
             <text macro="issued"/>
         </group>
     </macro>
-    <macro name="archival-static">
+    <macro name="citation-archival">
         <group delimiter=", ">
             <text macro="archive-note-largest-to-smallest"/>
             <choose>
@@ -914,15 +914,6 @@
                 <text macro="archive-note-largest-to-smallest"/>
             </else>
         </choose>
-        <choose>
-            <if match="any" type="article-newspaper personal_communication">
-                <date variable="issued">
-                    <date-part name="year" prefix=", "/>
-                    <date-part form="numeric" name="month" prefix="-"/>
-                    <date-part name="day" prefix="-"/>
-                </date>
-            </if>
-        </choose>
     </macro>
     <citation collapse="year" disambiguate-add-givenname="true" disambiguate-add-names="true" disambiguate-add-year-suffix="false" et-al-min="4" et-al-use-first="2"
         givenname-disambiguation-rule="primary-name-with-initials">
@@ -944,11 +935,11 @@
                 </else-if>
                 <!-- periodicals: reference does not change between first and subsequent -->
                 <else-if match="any" type="article-newspaper">
-                    <text macro="periodical-static"/>
+                    <text macro="citation-newspaper"/>
                     <text macro="point-locators"/>
                 </else-if>
                 <else-if match="any" type="personal_communication document">
-                    <text macro="archival-static"/>
+                    <text macro="citation-archival"/>
                 </else-if>
                 <else-if position="subsequent">
                     <group delimiter=", ">

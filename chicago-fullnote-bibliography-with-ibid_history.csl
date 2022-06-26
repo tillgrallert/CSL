@@ -1169,7 +1169,7 @@
             </if>
         </choose>
     </macro>
-    <macro name="issue-note-join-with-space">
+    <macro name="issued-note-join-with-space">
         <choose>
             <if match="any" type="article-journal bill legislation legal_case manuscript thesis" variable="publisher-place event-place publisher">
                 <!--Chicago doesn't use publisher/place for Newspapers and we want the date delimited by a comma-->
@@ -1177,10 +1177,10 @@
                     <if match="none" type="article-newspaper">
                         <choose>
                             <if match="none" type="article-journal">
-                                <text macro="issue-note"/>
+                                <text macro="issued-note"/>
                             </if>
                             <else-if match="any" variable="issue volume">
-                                <text macro="issue-note"/>
+                                <text macro="issued-note"/>
                             </else-if>
                         </choose>
                     </if>
@@ -1188,18 +1188,18 @@
             </if>
         </choose>
     </macro>
-    <macro name="issue-note-join-with-comma">
+    <macro name="issued-note-join-with-comma">
         <choose>
             <if match="none" type="article-journal bill legislation legal_case manuscript speech thesis" variable="publisher-place publisher">
-                <text macro="issue-note"/>
+                <text macro="issued-note"/>
             </if>
             <else-if type="article-newspaper">
-                <text macro="issue-note"/>
+                <text macro="issued-note"/>
             </else-if>
             <else-if type="article-journal">
                 <choose>
                     <if match="none" variable="volume issue">
-                        <text macro="issue-note"/>
+                        <text macro="issued-note"/>
                     </if>
                 </choose>
             </else-if>
@@ -1217,7 +1217,7 @@
             </if>
         </choose>
     </macro>
-    <macro name="issue-note">
+    <macro name="issued-note">
         <choose>
             <if match="any" type="bill legislation legal_case">
                 <!-- <text macro="issued" prefix="(" suffix=")"/> -->
@@ -1511,7 +1511,7 @@
         <group delimiter=", ">
             <text macro="container-title-note"/>
             <text macro="locators-note-join-with-comma"/>
-            <text macro="issue-note-join-with-comma"/>
+            <text macro="issued-note-join-with-comma"/>
         </group>
     </macro>
     <!-- letters -->
@@ -1523,10 +1523,51 @@
                 <text macro="title-note"/>
                 <!--                <text macro="issue-map-graphic"/>-->
             </group>
-            <!--            <text macro="issue-note-join-with-space"/>-->
-            <text macro="issue-note"/>
+            <!--            <text macro="issued-note-join-with-space"/>-->
+            <text macro="issued-note"/>
         </group>
     </macro>
+    <!-- imported from MLA -->
+    <macro name="citation-newspaper">
+    <group delimiter=", ">
+        <!-- periodical title -->
+        <text macro="container-title-note"/>
+        <!-- issue, volume etc. -->
+        <text macro="locators-note"/>
+        <!-- date -->
+        <text macro="issued"/>
+    </group>
+</macro>
+<macro name="citation-archival">
+    <group delimiter=", ">
+        <text macro="archive-note-largest-to-smallest"/>
+        <choose>
+            <if match="all" variable="publisher-place issue">
+                <group delimiter=" ">
+                    <text variable="publisher-place"/>
+                    <text variable="issue"/>
+                </group>
+            </if>
+            <else-if match="all" variable="publisher-place collection-title collection-number">
+                <group delimiter=" ">
+                    <text variable="publisher-place"/>
+                    <text variable="collection-title"/>
+                    <text variable="collection-number"/>
+                </group>
+            </else-if>
+        </choose>
+        <text variable="genre"/>
+        <!-- problem: undocumented (?) behaviour that in sequences of multiple references with the same author-recipient combination, this is only present in the first reference -->
+        <text macro="contributors-note"/>
+        <choose>
+            <if match="all" variable="publisher-place issue"/>
+            <else>
+                <text macro="title-note"/>
+            </else>
+        </choose>
+        <text macro="issued-note"/>
+    </group>
+</macro>
     <!-- macro for sorting primary sources -->
     <macro name="sort-reference-type">
         <choose>
@@ -1571,6 +1612,7 @@
                 <text macro="archive-note-largest-to-smallest"/>
             </else>
         </choose>
+
         <!--<choose>
             <if match="any" type="article-newspaper personal_communication">
                 <date variable="issued">
@@ -1588,7 +1630,7 @@
             <date-part form="numeric-leading-zeros" name="day" prefix="-"/>
         </date>
     </macro>
-    <citation disambiguate-add-names="true" et-al-min="4" et-al-use-first="1">
+    <citation collapse="year" disambiguate-add-givenname="true" disambiguate-add-names="true" et-al-min="4" et-al-use-first="1" givenname-disambiguation-rule="primary-name-with-initials">
         <sort>
             <key macro="sort-primary-sources-only"/>
         </sort>
@@ -1604,8 +1646,14 @@
                     <text term="ibid"/>
                 </else-if>
                 <!-- types of references that should not change according to context -->
-                <else-if match="any" type="article-newspaper letter personal_communication">
-                    <text macro="citation-stable"/>
+                <else-if match="any" type="article-newspaper">
+                    <group delimiter=": ">
+                        <text macro="citation-newspaper"/>
+                        <text macro="point-locators"/>
+                    </group>
+                </else-if>
+                <else-if match="any" type="letter personal_communication document">
+                    <text macro="citation-archival"/>
                 </else-if>
                 <else-if position="subsequent">
                     <group delimiter=", ">
@@ -1664,9 +1712,9 @@
                                         </group>
                                         <text macro="locators-note-join-with-comma"/>
                                         <text macro="collection-title"/>
-                                        <text macro="issue-note-join-with-comma"/>
+                                        <text macro="issued-note-join-with-comma"/>
                                     </group>
-                                    <text macro="issue-note-join-with-space"/>
+                                    <text macro="issued-note-join-with-space"/>
                                 </group>
                                 <text macro="locators-newspaper"/>
                                 <!-- due to my inconsistent use of page numbers for newspapers, these should be removed here -->
