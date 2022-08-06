@@ -224,7 +224,7 @@
     <macro name="recipient">
         <group delimiter=" ">
             <choose>
-                <if type="personal_communication">
+                <if type="letter personal_communication">
                     <choose>
                         <if variable="genre">
                             <text text-case="capitalize-first" variable="genre"/>
@@ -335,12 +335,24 @@
             <else-if variable="reviewed-author">
                 <text font-style="italic" prefix="review of " variable="title"/>
             </else-if>
+            <!-- letters: make title conditional on the absence of information -->
+            <else-if match="any" type="letter personal_communication">
+                <choose>
+                    <if match="any" variable="issue collection-title collection-number"/>
+                    <else>
+                        <text macro="title-note-generic"/>
+                    </else>
+                </choose>
+            </else-if>
             <else>
-                <text quotes="true" text-case="title" variable="title"/>
-                <!-- add translated title -->
-                <text macro="translated-title" prefix=" "/>
+                <text macro="title-note-generic"/>
             </else>
         </choose>
+    </macro>
+    <macro name="title-note-generic">
+        <text quotes="true" text-case="title" variable="title"/>
+        <!-- add translated title -->
+        <text macro="translated-title" prefix=" "/>
     </macro>
     <macro name="title">
         <choose>
@@ -1433,11 +1445,11 @@
                             <!-- I removed the condition as it didn't make sense to me -->
                             <!--<choose>
                                 <if match="none" variable="issued">-->
-                                    <group delimiter=" ">
-                                        <text term="accessed"/>
-                                        <date form="text" variable="accessed"/>
-                                    </group>
-                                <!--</if>
+                            <group delimiter=" ">
+                                <text term="accessed"/>
+                                <date form="text" variable="accessed"/>
+                            </group>
+                            <!--</if>
                             </choose>-->
                             <text variable="URL"/>
                         </else>
@@ -1656,6 +1668,7 @@
                         <text variable="issue"/>
                     </group>
                 </if>
+                <!-- will produce "Beirut Commercial 15 -->
                 <else-if match="all" variable="publisher-place collection-title collection-number">
                     <group delimiter=" ">
                         <text variable="publisher-place"/>
