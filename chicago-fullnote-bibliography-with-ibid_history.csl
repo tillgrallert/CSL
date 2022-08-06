@@ -49,7 +49,7 @@
             <term form="verb-short" name="editortranslator">ed. and trans.</term>
             <!-- <term form="verb" name="editortranslator">Edited and translated by</term> -->
             <term form="short" name="version">v.</term>
-            <term name="anonymous" form="short">NN.</term>
+            <term form="short" name="anonymous">NN.</term>
         </terms>
     </locale>
     <locale xml:lang="de">
@@ -60,7 +60,7 @@
             <term form="verb-short" name="editortranslator">hrsg. u. übers.</term>
             <!-- <term form="verb" name="editortranslator">Herausgegeben und übersetzt von</term> -->
             <term form="short" name="version">v.</term>
-            <term name="anonymous" form="short">o.&#160;A.</term>
+            <term form="short" name="anonymous">o.&#160;A.</term>
         </terms>
     </locale>
     <macro name="editor-translator">
@@ -183,7 +183,7 @@
         </group>
     </macro>
     <macro name="anonymous">
-        <text term="anonymous" form="short"/>
+        <text form="short" term="anonymous"/>
     </macro>
     <macro name="contributors">
         <group delimiter=". ">
@@ -1515,79 +1515,6 @@
                 <text prefix="[" suffix="]" text-case="title" variable="original-title"/>
             </if>
         </choose>--> </macro>
-    <!-- macros for stable, i.e. context-independent citations -->
-    <macro name="citation-stable">
-        <choose>
-            <if type="article-newspaper">
-                <text macro="citation-newspapers"/>
-            </if>
-            <else-if match="any" type="letter personal_communication">
-                <text macro="citation-letters"/>
-            </else-if>
-        </choose>
-    </macro>
-    <!-- newspapers -->
-    <macro name="citation-newspapers">
-        <group delimiter=", ">
-            <text macro="container-title-note"/>
-            <text macro="locators-note-join-with-comma"/>
-            <text macro="issued-note-join-with-comma"/>
-        </group>
-    </macro>
-    <!-- letters -->
-    <macro name="citation-letters">
-        <group delimiter=" ">
-            <group delimiter=", ">
-                <text macro="archive-note-largest-to-smallest"/>
-                <text macro="contributors-note"/>
-                <text macro="title-note"/>
-                <!--                <text macro="issue-map-graphic"/>-->
-            </group>
-            <!--            <text macro="issued-note-join-with-space"/>-->
-            <text macro="issued-note"/>
-        </group>
-    </macro>
-    <!-- imported from MLA -->
-    <macro name="citation-newspaper">
-        <group delimiter=", ">
-            <!-- periodical title -->
-            <text macro="container-title-note"/>
-            <!-- issue, volume etc. -->
-            <text macro="locators-note"/>
-            <!-- date -->
-            <text macro="issued"/>
-        </group>
-    </macro>
-    <macro name="citation-archival">
-        <group delimiter=", ">
-            <text macro="archive-note-largest-to-smallest"/>
-            <choose>
-                <if match="all" variable="publisher-place issue">
-                    <group delimiter=" ">
-                        <text variable="publisher-place"/>
-                        <text variable="issue"/>
-                    </group>
-                </if>
-                <else-if match="all" variable="publisher-place collection-title collection-number">
-                    <group delimiter=" ">
-                        <text variable="publisher-place"/>
-                        <text variable="collection-title"/>
-                        <text variable="collection-number"/>
-                    </group>
-                </else-if>
-            </choose>
-            <text variable="genre"/>
-            <!-- problem: undocumented (?) behaviour that in sequences of multiple references with the same author-recipient combination, this is only present in the first reference -->
-            <text macro="contributors-note"/>
-            <choose>
-                <if match="all" variable="publisher-place issue"/>
-                <else>
-                    <text macro="title-note"/>
-                </else>
-            </choose>
-            <text macro="issued-note"/>
-        </group>
-    </macro>
     <!-- macro for sorting primary sources -->
     <macro name="sort-reference-type">
         <choose>
@@ -1649,6 +1576,106 @@
             <date-part form="numeric-leading-zeros" name="day" prefix="-"/>
         </date>
     </macro>
+    <!-- macros for stable, i.e. context-independent citations -->
+    <macro name="citation-note-full">
+        <choose>
+            <if type="article-newspaper">
+                <text macro="citation-newspaper"/>
+            </if>
+            <else-if match="any" type="letter personal_communication document">
+                <text macro="citation-archival"/>
+            </else-if>
+            <else>
+                <group delimiter=", ">
+                    <!-- information on archive first -->
+                    <text macro="archive-note-largest-to-smallest"/>
+                    <group delimiter=": ">
+                        <group delimiter=", ">
+                            <group delimiter=" ">
+                                <group delimiter=", ">
+                                    <group delimiter=" ">
+                                        <group delimiter=", ">
+                                            <group delimiter=", ">
+                                                <text macro="contributors-note"/>
+                                                <text macro="title-note"/>
+                                                <text macro="issue-map-graphic"/>
+                                            </group>
+                                            <text macro="description-note"/>
+                                            <text macro="secondary-contributors-note"/>
+                                            <!-- periodicals should use the short title only -->
+                                            <text macro="container-title-note"/>
+                                            <text macro="container-contributors-note"/>
+                                        </group>
+                                        <text macro="locators-note-join-with-space"/>
+                                    </group>
+                                    <text macro="locators-note-join-with-comma"/>
+                                    <text macro="collection-title"/>
+                                    <text macro="issued-note-join-with-comma"/>
+                                </group>
+                                <text macro="issued-note-join-with-space"/>
+                            </group>
+                            <text macro="locators-newspaper"/>
+                            <!-- due to my inconsistent use of page numbers for newspapers, these should be removed here -->
+                            <choose>
+                                <if match="any" type="article-newspaper"/>
+                                <else>
+                                    <text macro="point-locators-join-with-comma"/>
+                                </else>
+                            </choose>
+                            <!-- <text macro="point-locators-join-with-comma"/> -->
+                        </group>
+                        <text macro="point-locators-join-with-colon"/>
+                    </group>
+                    <!-- remove non-sensical URLs. Just because they are there, I would not like to see every link referenced -->
+                    <text macro="access-note"/>
+                </group>
+            </else>
+        </choose>
+    </macro>
+    <!-- imported from MLA -->
+    <macro name="citation-newspaper">
+        <group delimiter=": ">
+            <group delimiter=", ">
+                <!-- periodical title -->
+                <text macro="container-title-note"/>
+                <!-- issue, volume etc. -->
+                <text macro="locators-note"/>
+                <!-- date -->
+                <text macro="issued"/>
+            </group>
+            <text macro="point-locators"/>
+        </group>
+    </macro>
+    <macro name="citation-archival">
+        <group delimiter=", ">
+            <text macro="archive-note-largest-to-smallest"/>
+            <choose>
+                <if match="all" variable="publisher-place issue">
+                    <group delimiter=" ">
+                        <text variable="publisher-place"/>
+                        <text variable="issue"/>
+                    </group>
+                </if>
+                <else-if match="all" variable="publisher-place collection-title collection-number">
+                    <group delimiter=" ">
+                        <text variable="publisher-place"/>
+                        <text variable="collection-title"/>
+                        <text variable="collection-number"/>
+                    </group>
+                </else-if>
+            </choose>
+            <text variable="genre"/>
+            <!-- problem: undocumented (?) behaviour that in sequences of multiple references with the same author-recipient combination, this is only present in the first reference -->
+            <text macro="contributors-note"/>
+            <choose>
+                <if match="all" variable="publisher-place issue"/>
+                <else>
+                    <text macro="title-note"/>
+                </else>
+            </choose>
+            <text macro="issued-note"/>
+        </group>
+    </macro>
     <citation collapse="year" disambiguate-add-givenname="true" disambiguate-add-names="true" disambiguate-add-year-suffix="true" et-al-min="4" et-al-use-first="1"
         givenname-disambiguation-rule="primary-name-with-initials">
         <sort>
@@ -1666,14 +1693,8 @@
                     <text term="ibid"/>
                 </else-if>
                 <!-- types of references that should not change according to context -->
-                <else-if match="any" type="article-newspaper">
-                    <group delimiter=": ">
-                        <text macro="citation-newspaper"/>
-                        <text macro="point-locators"/>
-                    </group>
-                </else-if>
-                <else-if match="any" type="letter personal_communication document">
-                    <text macro="citation-archival"/>
+                <else-if match="any" type="article-magazine article-newspaper graphic document letter manuscript personal_communication">
+                    <text macro="citation-note-full"/>
                 </else-if>
                 <else-if position="subsequent">
                     <group delimiter=", ">
@@ -1702,49 +1723,7 @@
                 </else-if>
                 <!-- first mention -->
                 <else>
-                    <group delimiter=", ">
-                        <!-- information on archive first -->
-                        <text macro="archive-note-largest-to-smallest"/>
-                        <group delimiter=": ">
-                            <group delimiter=", ">
-                                <group delimiter=" ">
-                                    <group delimiter=", ">
-                                        <group delimiter=" ">
-                                            <group delimiter=", ">
-                                                <group delimiter=", ">
-                                                    <text macro="contributors-note"/>
-                                                    <text macro="title-note"/>
-                                                    <text macro="issue-map-graphic"/>
-                                                </group>
-                                                <text macro="description-note"/>
-                                                <text macro="secondary-contributors-note"/>
-                                                <!-- periodicals should use the short title only -->
-                                                <text macro="container-title-note"/>
-                                                <text macro="container-contributors-note"/>
-                                            </group>
-                                            <text macro="locators-note-join-with-space"/>
-                                        </group>
-                                        <text macro="locators-note-join-with-comma"/>
-                                        <text macro="collection-title"/>
-                                        <text macro="issued-note-join-with-comma"/>
-                                    </group>
-                                    <text macro="issued-note-join-with-space"/>
-                                </group>
-                                <text macro="locators-newspaper"/>
-                                <!-- due to my inconsistent use of page numbers for newspapers, these should be removed here -->
-                                <choose>
-                                    <if match="any" type="article-newspaper"/>
-                                    <else>
-                                        <text macro="point-locators-join-with-comma"/>
-                                    </else>
-                                </choose>
-                                <!-- <text macro="point-locators-join-with-comma"/> -->
-                            </group>
-                            <text macro="point-locators-join-with-colon"/>
-                        </group>
-                        <!-- remove non-sensical URLs. Just because they are there, I would not like to see every link referenced -->
-                        <text macro="access-note"/>
-                    </group>
+                    <text macro="citation-note-full"/>
                 </else>
             </choose>
         </layout>
@@ -1764,7 +1743,7 @@
         <layout suffix=".">
             <choose>
                 <!-- letters and other archival material should not end up in the bibliography -->
-                <if match="any" type="personal_communication article-newspaper article-magazine letter manuscript">
+                <if match="any" type="article-magazine article-newspaper graphic document letter manuscript personal_communication">
                     <!-- this will cause a warning upon running citeproc --> </if>
                 <else>
                     <group delimiter=". ">
