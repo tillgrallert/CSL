@@ -262,6 +262,7 @@
             <substitute>
                 <names variable="editor"/>
                 <names variable="translator"/>
+                <text macro="anonymous"/>
                 <text macro="title"/>
             </substitute>
         </names>
@@ -279,6 +280,7 @@
                 <substitute>
                     <names variable="editor"/>
                     <names variable="translator"/>
+                    <text macro="anonymous"/>
                     <text macro="title"/>
                 </substitute>
             </names>
@@ -584,6 +586,62 @@
             </if>
         </choose>
     </macro>
+    <macro name="legal-cites">
+        <choose>
+            <if match="any" type="legal_case">
+                <group delimiter=" ">
+                    <choose>
+                        <if variable="container-title">
+                            <text variable="volume"/>
+                            <text variable="container-title"/>
+                            <group delimiter=" ">
+                                <!--change to label variable="section" as that becomes available -->
+                                <text form="symbol" term="section"/>
+                                <text variable="section"/>
+                            </group>
+                            <text variable="page"/>
+                        </if>
+                        <else>
+                            <text prefix="No. " variable="number"/>
+                        </else>
+                    </choose>
+                </group>
+            </if>
+            <else-if match="any" type="bill legislation">
+                <group delimiter=", ">
+                    <choose>
+                        <if variable="number">
+                            <!--There's a public law number-->
+                            <text prefix="Pub. L. No. " variable="number"/>
+                            <choose>
+                                <if variable="section">
+                                    <group delimiter=" ">
+                                        <!--change to label variable="section" as that becomes available -->
+                                        <text form="symbol" term="section"/>
+                                        <text variable="section"/>
+                                    </group>
+                                </if>
+                            </choose>
+                            <group delimiter=" ">
+                                <text variable="volume"/>
+                                <text variable="container-title"/>
+                                <text variable="page-first"/>
+                            </group>
+                        </if>
+                        <else>
+                            <group delimiter=" ">
+                                <text variable="volume"/>
+                                <text variable="container-title"/>
+                                <!--change to label variable="section" as that becomes available -->
+                                <text form="symbol" term="section"/>
+                                <text variable="section"/>
+                            </group>
+                        </else>
+                    </choose>
+                </group>
+            </else-if>
+        </choose>
+    </macro>
     <macro name="locators-note-join-with-space">
         <choose>
             <if match="all" type="article-journal" variable="volume">
@@ -658,62 +716,6 @@
                                 <text form="short" plural="true" term="volume"/>
                             </group>
                         </if>
-                    </choose>
-                </group>
-            </else-if>
-        </choose>
-    </macro>
-    <macro name="legal-cites">
-        <choose>
-            <if match="any" type="legal_case">
-                <group delimiter=" ">
-                    <choose>
-                        <if variable="container-title">
-                            <text variable="volume"/>
-                            <text variable="container-title"/>
-                            <group delimiter=" ">
-                                <!--change to label variable="section" as that becomes available -->
-                                <text form="symbol" term="section"/>
-                                <text variable="section"/>
-                            </group>
-                            <text variable="page"/>
-                        </if>
-                        <else>
-                            <text prefix="No. " variable="number"/>
-                        </else>
-                    </choose>
-                </group>
-            </if>
-            <else-if match="any" type="bill legislation">
-                <group delimiter=", ">
-                    <choose>
-                        <if variable="number">
-                            <!--There's a public law number-->
-                            <text prefix="Pub. L. No. " variable="number"/>
-                            <choose>
-                                <if variable="section">
-                                    <group delimiter=" ">
-                                        <!--change to label variable="section" as that becomes available -->
-                                        <text form="symbol" term="section"/>
-                                        <text variable="section"/>
-                                    </group>
-                                </if>
-                            </choose>
-                            <group delimiter=" ">
-                                <text variable="volume"/>
-                                <text variable="container-title"/>
-                                <text variable="page-first"/>
-                            </group>
-                        </if>
-                        <else>
-                            <group delimiter=" ">
-                                <text variable="volume"/>
-                                <text variable="container-title"/>
-                                <!--change to label variable="section" as that becomes available -->
-                                <text form="symbol" term="section"/>
-                                <text variable="section"/>
-                            </group>
-                        </else>
                     </choose>
                 </group>
             </else-if>
@@ -1054,14 +1056,16 @@
     </macro>
     <macro name="point-locators">
         <choose>
+            <!-- if there is no specific page referenced, some ref types should get the page range of the full text -->
             <if match="none" variable="locator">
                 <choose>
-                    <if match="any" type="article-journal chapter paper-conference">
+                    <if match="any" type="article-journal article-magazine chapter paper-conference">
                         <text variable="page"/>
                     </if>
                 </choose>
             </if>
-            <else-if type="article-journal">
+            <!-- a specific location in the text is referenced -->
+            <else-if type="article-journal article-magazine">
                 <group delimiter=" ">
                     <choose>
                         <if locator="page" match="none">
