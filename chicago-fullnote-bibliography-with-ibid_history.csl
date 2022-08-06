@@ -49,6 +49,7 @@
             <term form="verb-short" name="editortranslator">ed. and trans.</term>
             <!-- <term form="verb" name="editortranslator">Edited and translated by</term> -->
             <term form="short" name="version">v.</term>
+            <term name="anonymous" form="short">NN.</term>
         </terms>
     </locale>
     <locale xml:lang="de">
@@ -59,6 +60,7 @@
             <term form="verb-short" name="editortranslator">hrsg. u. übers.</term>
             <!-- <term form="verb" name="editortranslator">Herausgegeben und übersetzt von</term> -->
             <term form="short" name="version">v.</term>
+            <term name="anonymous" form="short">o.&#160;A.</term>
         </terms>
     </locale>
     <macro name="editor-translator">
@@ -162,6 +164,10 @@
                         </substitute>
                     </names>
                 </if>
+                <!-- anonymous texts -->
+                <else-if match="none" variable="author editor translator">
+                    <text macro="anonymous"/>
+                </else-if>
                 <else>
                     <names variable="author">
                         <name and="text" delimiter=", " sort-separator=", "/>
@@ -174,6 +180,33 @@
                 </else>
             </choose>
             <text macro="recipient-note"/>
+        </group>
+    </macro>
+    <macro name="anonymous">
+        <text term="anonymous" form="short"/>
+    </macro>
+    <macro name="contributors">
+        <group delimiter=". ">
+            <choose>
+                <if match="none" variable="author editor translator">
+                    <text macro="anonymous"/>
+                </if>
+                <else>
+                    <names variable="author">
+                        <name and="text" delimiter=", " delimiter-precedes-last="always" name-as-sort-order="first" sort-separator=", "/>
+                        <substitute>
+                            <text macro="editor"/>
+                            <text macro="translator"/>
+                            <choose>
+                                <if match="any" type="webpage post-weblog">
+                                    <text variable="container-title"/>
+                                </if>
+                            </choose>
+                        </substitute>
+                    </names>
+                </else>
+            </choose>
+            <text macro="recipient"/>
         </group>
     </macro>
     <macro name="editor">
@@ -203,23 +236,6 @@
                 </if>
             </choose>
             <text macro="recipient-note"/>
-        </group>
-    </macro>
-    <macro name="contributors">
-        <group delimiter=". ">
-            <names variable="author">
-                <name and="text" delimiter=", " delimiter-precedes-last="always" name-as-sort-order="first" sort-separator=", "/>
-                <substitute>
-                    <text macro="editor"/>
-                    <text macro="translator"/>
-                    <choose>
-                        <if match="any" type="webpage post-weblog">
-                            <text variable="container-title"/>
-                        </if>
-                    </choose>
-                </substitute>
-            </names>
-            <text macro="recipient"/>
         </group>
     </macro>
     <macro name="recipient-short">
@@ -1489,12 +1505,12 @@
     <!-- custom macros -->
     <macro name="translated-title">
         <!-- currently, Zotero does not support translated titles. https://forums.zotero.org/discussion/90060/style-request-chicago-translated-titles-of-cited-works suggested to use "original-title" in the extra field for this purpose. -->
-        <choose>
+        <!-- I removed it again due to too much ambiguity in the data -->
+        <!--<choose>
             <if match="any" variable="original-title">
                 <text prefix="[" suffix="]" text-case="title" variable="original-title"/>
             </if>
-        </choose>
-    </macro>
+        </choose>--> </macro>
     <!-- macros for stable, i.e. context-independent citations -->
     <macro name="citation-stable">
         <choose>
@@ -1529,45 +1545,45 @@
     </macro>
     <!-- imported from MLA -->
     <macro name="citation-newspaper">
-    <group delimiter=", ">
-        <!-- periodical title -->
-        <text macro="container-title-note"/>
-        <!-- issue, volume etc. -->
-        <text macro="locators-note"/>
-        <!-- date -->
-        <text macro="issued"/>
-    </group>
-</macro>
-<macro name="citation-archival">
-    <group delimiter=", ">
-        <text macro="archive-note-largest-to-smallest"/>
-        <choose>
-            <if match="all" variable="publisher-place issue">
-                <group delimiter=" ">
-                    <text variable="publisher-place"/>
-                    <text variable="issue"/>
-                </group>
-            </if>
-            <else-if match="all" variable="publisher-place collection-title collection-number">
-                <group delimiter=" ">
-                    <text variable="publisher-place"/>
-                    <text variable="collection-title"/>
-                    <text variable="collection-number"/>
-                </group>
-            </else-if>
-        </choose>
-        <text variable="genre"/>
-        <!-- problem: undocumented (?) behaviour that in sequences of multiple references with the same author-recipient combination, this is only present in the first reference -->
-        <text macro="contributors-note"/>
-        <choose>
-            <if match="all" variable="publisher-place issue"/>
-            <else>
-                <text macro="title-note"/>
-            </else>
-        </choose>
-        <text macro="issued-note"/>
-    </group>
-</macro>
+        <group delimiter=", ">
+            <!-- periodical title -->
+            <text macro="container-title-note"/>
+            <!-- issue, volume etc. -->
+            <text macro="locators-note"/>
+            <!-- date -->
+            <text macro="issued"/>
+        </group>
+    </macro>
+    <macro name="citation-archival">
+        <group delimiter=", ">
+            <text macro="archive-note-largest-to-smallest"/>
+            <choose>
+                <if match="all" variable="publisher-place issue">
+                    <group delimiter=" ">
+                        <text variable="publisher-place"/>
+                        <text variable="issue"/>
+                    </group>
+                </if>
+                <else-if match="all" variable="publisher-place collection-title collection-number">
+                    <group delimiter=" ">
+                        <text variable="publisher-place"/>
+                        <text variable="collection-title"/>
+                        <text variable="collection-number"/>
+                    </group>
+                </else-if>
+            </choose>
+            <text variable="genre"/>
+            <!-- problem: undocumented (?) behaviour that in sequences of multiple references with the same author-recipient combination, this is only present in the first reference -->
+            <text macro="contributors-note"/>
+            <choose>
+                <if match="all" variable="publisher-place issue"/>
+                <else>
+                    <text macro="title-note"/>
+                </else>
+            </choose>
+            <text macro="issued-note"/>
+        </group>
+    </macro>
     <!-- macro for sorting primary sources -->
     <macro name="sort-reference-type">
         <choose>
@@ -1612,7 +1628,6 @@
                 <text macro="archive-note-largest-to-smallest"/>
             </else>
         </choose>
-
         <!--<choose>
             <if match="any" type="article-newspaper personal_communication">
                 <date variable="issued">
@@ -1630,7 +1645,8 @@
             <date-part form="numeric-leading-zeros" name="day" prefix="-"/>
         </date>
     </macro>
-    <citation collapse="year" disambiguate-add-givenname="true" disambiguate-add-names="true" et-al-min="4" et-al-use-first="1" givenname-disambiguation-rule="primary-name-with-initials">
+    <citation collapse="year" disambiguate-add-givenname="true" disambiguate-add-names="true" disambiguate-add-year-suffix="true" et-al-min="4" et-al-use-first="1"
+        givenname-disambiguation-rule="primary-name-with-initials">
         <sort>
             <key macro="sort-primary-sources-only"/>
         </sort>
@@ -1691,17 +1707,11 @@
                                     <group delimiter=", ">
                                         <group delimiter=" ">
                                             <group delimiter=", ">
-                                                <choose>
-                                                    <!-- remove too detailed information for periodicals, particularly newspapers -->
-                                                    <if match="any" type="article-newspaper"/>
-                                                    <else>
-                                                        <group delimiter=", ">
-                                                            <text macro="contributors-note"/>
-                                                            <text macro="title-note"/>
-                                                            <text macro="issue-map-graphic"/>
-                                                        </group>
-                                                    </else>
-                                                </choose>
+                                                <group delimiter=", ">
+                                                    <text macro="contributors-note"/>
+                                                    <text macro="title-note"/>
+                                                    <text macro="issue-map-graphic"/>
+                                                </group>
                                                 <text macro="description-note"/>
                                                 <text macro="secondary-contributors-note"/>
                                                 <!-- periodicals should use the short title only -->
@@ -1750,7 +1760,9 @@
         <layout suffix=".">
             <choose>
                 <!-- letters and other archival material should not end up in the bibliography -->
-                <if match="none" type="personal_communication article-newspaper article-magazine letter manuscript">
+                <if match="any" type="personal_communication article-newspaper article-magazine letter manuscript">
+                    <!-- this will cause a warning upon running citeproc --> </if>
+                <else>
                     <group delimiter=". ">
                         <!-- debugging -->
                         <!--<text macro="sort-title"/>-->
@@ -1794,7 +1806,7 @@
                         </group>
                         <text macro="access"/>
                     </group>
-                </if>
+                </else>
             </choose>
         </layout>
     </bibliography>
