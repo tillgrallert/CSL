@@ -1181,9 +1181,19 @@
             <if match="any" type="manuscript letter personal_communication graphic report">
                 <group delimiter=", ">
                     <text variable="archive"/>
-                    <text text-case="capitalize-first" variable="archive_location"/>
+                    <text variable="archive_location"/>
                     <!-- this field is not present in Zotero and it is not entirely clear which entry from the extra field would map to this field -->
                     <!--          <text variable="archive-place"/>-->
+                    <!-- Zotero encodes "library" as "source" in CSL JSON -->
+                    <choose>
+                        <if match="any" type="graphic">
+                            <choose>
+                                <if match="none" variable="archive">
+                                    <text variable="source"/>
+                                </if>
+                            </choose>
+                        </if>
+                    </choose>
                     <text variable="call-number"/>
                 </group>
             </if>
