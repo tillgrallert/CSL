@@ -1793,7 +1793,8 @@
                                                     <text macro="locators-join-with-period"/>
                                                 </group>
                                                 <text macro="locators-join-with-comma"/>
-                                                <text macro="locators-chapter"/>
+                                                <!-- this is a very odd location for page ranges in book chapters, which everyone would put at the end of the reference -->
+                                                <!--<text macro="locators-chapter"/>-->
                                             </group>
                                             <text macro="locators-join-with-space"/>
                                         </group>
@@ -1805,6 +1806,8 @@
                                 <text macro="issue-join-with-comma"/>
                                 <text macro="locators-journal-join-with-comma"/>
                                 <text macro="locators-newspaper"/>
+                                <!-- this is where I would expect pages of chapters to occur -->
+                                <text macro="locators-chapter"/>
                             </group>
                             <text macro="locators-journal-join-with-colon"/>
                         </group>
