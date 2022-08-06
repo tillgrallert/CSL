@@ -1423,22 +1423,15 @@
     </macro>
     <macro name="access-note">
         <group delimiter=", ">
+            <!-- the location of the access date **before** the URL is unusual -->
             <!--<choose>
-        <if match="any" type="graphic report">
-          <text macro="archive-note"/>
-        </if>
-        <else-if match="none" type="article-journal bill book chapter legal_case legislation motion_picture paper-conference">
-          <text macro="archive-note"/>
-        </else-if>
-      </choose>-->
-            <choose>
                 <if match="none" variable="issued">
                     <group delimiter=" ">
                         <text term="accessed"/>
                         <date form="text" variable="accessed"/>
                     </group>
                 </if>
-            </choose>
+            </choose>-->
             <choose>
                 <if match="none" type="legal_case">
                     <choose>
@@ -1449,6 +1442,16 @@
                         <!-- exclude reference types -->
                         <else-if match="any" type="chapter"/>
                         <else>
+                            <!-- the location of the access date **before** the URL is unusual -->
+                            <!-- I removed the condition as it didn't make sense to me -->
+                            <!--<choose>
+                                <if match="none" variable="issued">-->
+                                    <group delimiter=" ">
+                                        <text term="accessed"/>
+                                        <date form="text" variable="accessed"/>
+                                    </group>
+                                <!--</if>
+                            </choose>-->
                             <text variable="URL"/>
                         </else>
                     </choose>
