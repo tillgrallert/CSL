@@ -9,10 +9,11 @@ ORCID: orcid.org/0000-0002-5739-8094
 # to do
 ## CMS
 
-
+- [x] publication dates for journal articles: year only
 - [ ] books with similar short titles and no author are not differentiated upon subsequent mentions
     + e.g. Sālnāmes
     + [x] with "NN." for anonymous authors, this has improved a bit
+        * [x] add NN. for subsequent references
 - [ ] translated titles
     + due to a shortcoming in the current version of CSL/ citeproc, the field `translated-title` in Zotero's extra field cannot be addressed. As a work-around people use `original-title` instead.
     + [x] remove the value from display for books

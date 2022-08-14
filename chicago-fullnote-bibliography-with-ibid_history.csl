@@ -209,6 +209,29 @@
             <text macro="recipient"/>
         </group>
     </macro>
+    <macro name="contributors-short">
+        <group delimiter=" ">
+            <choose>
+                <if match="none" variable="author editor translator">
+                    <text macro="anonymous"/>
+                </if>
+                <else>
+                    <names variable="author">
+                        <name and="text" delimiter=", " form="short"/>
+                        <substitute>
+                            <names variable="editor">
+                                <name and="text" delimiter=", " form="short"/>
+                            </names>
+                            <names variable="translator">
+                                <name and="text" delimiter=", " form="short"/>
+                            </names>
+                        </substitute>
+                    </names>
+                </else>
+            </choose>
+            <text macro="recipient-short"/>
+        </group>
+    </macro>
     <macro name="editor">
         <names variable="editor">
             <name and="text" delimiter=", " delimiter-precedes-last="always" name-as-sort-order="first" sort-separator=", "/>
@@ -243,18 +266,6 @@
             <label form="verb" suffix=" " text-case="lowercase"/>
             <name and="text" delimiter=", " form="short"/>
         </names>
-    </macro>
-    <macro name="contributors-short">
-        <group delimiter=" ">
-            <names variable="author">
-                <name and="text" delimiter=", " form="short"/>
-                <substitute>
-                    <names variable="editor"/>
-                    <names variable="translator"/>
-                </substitute>
-            </names>
-            <text macro="recipient-short"/>
-        </group>
     </macro>
     <macro name="sort-contributors">
         <names variable="author">
@@ -925,7 +936,7 @@
                             </choose>
                         </group>
                     </if>
-                    <else-if match="any" type="book bill chapter  legislation motion_picture paper-conference song thesis">
+                    <else-if match="any" type="book bill chapter article-journal  legislation motion_picture paper-conference song thesis">
                         <choose>
                             <if is-uncertain-date="issued">
                                 <date date-parts="year" form="numeric" prefix="[" suffix="?]" variable="issued"/>
@@ -1434,13 +1445,13 @@
             <choose>
                 <if match="none" type="legal_case">
                     <choose>
-                        <if variable="DOI">
+                        <if match="all" variable="DOI">
                             <text prefix="https://doi.org/" variable="DOI"/>
                         </if>
                         <!-- remove non-sensical URLs. Just because they are there, I would not like to see every link referenced -->
                         <!-- exclude reference types -->
                         <else-if match="any" type="chapter"/>
-                        <else>
+                        <else-if match="all" variable="URL">
                             <!-- the location of the access date **before** the URL is unusual -->
                             <!-- I removed the condition as it didn't make sense to me -->
                             <!--<choose>
@@ -1452,7 +1463,7 @@
                             <!--</if>
                             </choose>-->
                             <text variable="URL"/>
-                        </else>
+                        </else-if>
                     </choose>
                 </if>
             </choose>
@@ -1526,7 +1537,8 @@
             <if match="any" variable="original-title">
                 <text prefix="[" suffix="]" text-case="title" variable="original-title"/>
             </if>
-        </choose>--> </macro>
+        </choose>-->
+    </macro>
     <!-- macro for sorting primary sources -->
     <macro name="sort-reference-type">
         <choose>
@@ -1757,7 +1769,8 @@
             <choose>
                 <!-- letters and other archival material should not end up in the bibliography -->
                 <if match="any" type="article-magazine article-newspaper graphic document letter manuscript personal_communication">
-                    <!-- this will cause a warning upon running citeproc --> </if>
+                    <!-- this will cause a warning upon running citeproc -->
+                </if>
                 <else>
                     <group delimiter=". ">
                         <!-- debugging -->
