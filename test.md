@@ -49,7 +49,7 @@ Diary entries are currently recorded as `manuscripts` in Zotero.[^5] This works 
 
 ## Second level
 
-Donec sed odio dui [Books: @AbouHodeib+2017; @AlBuḥayrī+1902; @AlQasimi+1960b; @SchatkowskiSchilcher+1985, 67; @VonKremer+1853, 81-83]. Donec **ullamcorper** nulla non metus auctor fringilla. Cras justo odio, dapibus ac facilisis in, egestas eget quam [Book chapters: @Danielson2021WomenVoices; @Grallert+2019; @Hanna2016TheatreMaking; @Homberg2022ElektronischerKolonialismus; @Winckler2022Seriality, 135-137 write something]. Praesent commodo cursus magna, vel `scelerisque nisl consectetur` et.[^3] Nulla vitae elit libero, a pharetra augue [Journal articles: @AbūShanab+1978; @Boyar+2006, 56-59; @Karachouli+1992; @Salzmann+1993, 78].
+Donec sed odio dui [Books: @AbouHodeib+2017; @AlBuḥayrī+1902; @AlQasimi+1960b; @SchatkowskiSchilcher+1985, 67; @VonKremer+1853, 81-83; @Syria+salname+1878; @Syria+Salname+1879]. Donec **ullamcorper** nulla non metus auctor fringilla. Cras justo odio, dapibus ac facilisis in, egestas eget quam [Book chapters: @Danielson2021WomenVoices; @Grallert+2019; @Hanna2016TheatreMaking; @Homberg2022ElektronischerKolonialismus; @Winckler2022Seriality, 135-137 write something]. Praesent commodo cursus magna, vel `scelerisque nisl consectetur` et.[^3] Nulla vitae elit libero, a pharetra augue [Journal articles: @AbūShanab+1978; @Boyar+2006, 56-59; @Karachouli+1992; @Salzmann+1993, 78].
 
 >Lorem ipsum dolor sit amet consectetur adipiscing elit pharetra, elementum lacus suscipit inceptos facilisis ridiculus fusce quam per, himenaeos phasellus sociis urna torquent vivamus platea. Arcu adipiscing ante nascetur dui nisl scelerisque torquent, sem ultrices metus integer eu fames maecenas senectus, cubilia ullamcorper taciti phasellus suspendisse imperdiet.[^2]
 
@@ -76,7 +76,7 @@ Donec sed odio dui. Vestibulum id ligula porta felis euismod semper. Duis mollis
 
 # Subsequent references
 
-Donec sed odio dui [Books: @AbouHodeib+2017; @AlBuḥayrī+1902; @AlQasimi+1960b; @SchatkowskiSchilcher+1985, 67; @VonKremer+1853, 81-83]. Donec **ullamcorper** nulla non metus auctor fringilla. Cras justo odio, dapibus ac facilisis in, egestas eget quam [Book chapters: @Danielson2021WomenVoices; @Grallert+2019; @Hanna2016TheatreMaking; @Homberg2022ElektronischerKolonialismus; @Winckler2022Seriality, 135-137 write something]. Praesent commodo cursus magna, vel `scelerisque nisl consectetur` et.[^3] Nulla vitae elit libero, a pharetra augue [Journal articles: @AbūShanab+1978; @Boyar+2006; @Karachouli+1992; @Salzmann+1993, 78]
+Donec sed odio dui [Books: @AbouHodeib+2017; @AlBuḥayrī+1902; @AlQasimi+1960b; @SchatkowskiSchilcher+1985, 67; @VonKremer+1853, 81-83; @Syria+salname+1878; @Syria+Salname+1879]. Donec **ullamcorper** nulla non metus auctor fringilla. Cras justo odio, dapibus ac facilisis in, egestas eget quam [Book chapters: @Danielson2021WomenVoices; @Grallert+2019; @Hanna2016TheatreMaking; @Homberg2022ElektronischerKolonialismus; @Winckler2022Seriality, 135-137 write something]. Praesent commodo cursus magna, vel `scelerisque nisl consectetur` et.[^3] Nulla vitae elit libero, a pharetra augue [Journal articles: @AbūShanab+1978; @Boyar+2006; @Karachouli+1992; @Salzmann+1993, 78]
 
 >Lorem ipsum dolor sit amet consectetur adipiscing elit pharetra, elementum lacus suscipit inceptos facilisis ridiculus fusce quam per, himenaeos phasellus sociis urna torquent vivamus platea. Arcu adipiscing ante nascetur dui nisl scelerisque torquent, sem ultrices metus integer eu fames maecenas senectus, cubilia ullamcorper taciti phasellus suspendisse imperdiet.[^2]
 
@@ -96,8 +96,8 @@ Lorem ipsum dolor [@Yıldız+2008] sit amet consectetur adipiscing[^6] elit pena
 [^9]: No trailing punctuation: For abc see [@Roded+1984, 3], who says bla.
 
 
-[^1]: This photograph seems to show large groups of women sitting along the banks of the river at Ṣūfāniyya east of Bāb Tūmā; [@UnderwoodUnderwood+1900a].
+[^1]: This photograph seems to show large groups of women sitting along the banks of the river at Ṣūfāniyya east of Bāb Tūmā; @UnderwoodUnderwood+1900a; @Damascus; @DamaskusJahrmarktKarussell+1917.
 [^2]: Newspaper articles: [@bashir+410; @jann+1368; @lisan+70; @thamarat+272a, 1-2].
 [^3]: Magazine articles: [@Butchart+1892a; @Johnston+1899; @oclc_644997575-i_17-div_8.d1e1603_en; @oclc_644997575-i_18-div_7.d2e1421_en, 23].
 [^4]: [Bills, legal texts:  @MatbuatNizamnamesi1864, §6; @MatbuatNizamnamesi1872; @NizamAlMatbuatArt171909; @NizamAlMatbuatArt171909a, §6; @Nawfal+1883e, §6-9; @Young+1905e].
-[^5]: [Manuscripts incl. diary entries: @Bauernfeind+1889a; @Dickson+1882bt; @BarchN15815Dienstlicher+1898; @CommercialNo1+1878; @Rg84DamascusVol22+1912]
+[^5]: [Manuscripts incl. diary entries: @Bauernfeind+1889a; @Dickson+1882bt]
