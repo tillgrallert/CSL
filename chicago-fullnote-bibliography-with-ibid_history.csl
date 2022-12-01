@@ -8,8 +8,8 @@
         - Statute is mapped to CSL type legislation
      -->
     <info>
-        <title>Chicago Manual of Style 17th edition (full note, with Ibid.)</title>
-        <id>http://www.zotero.org/styles/chicago-fullnote-bibliography-with-ibid</id>
+        <title>CMS 17 for historians (full note, with Ibid.)</title>
+        <id>http://www.zotero.org/styles/cms17-history-fullnote-ibid</id>
         <link href="http://www.zotero.org/styles/chicago-fullnote-bibliography-with-ibid" rel="self"/>
         <link href="http://www.chicagomanualofstyle.org/tools_citationguide.html" rel="documentation"/>
         <author>
@@ -35,10 +35,14 @@
         <contributor>
             <name>Sebastian Karcher</name>
         </contributor>
+        <contributor>
+            <name>Till Grallert</name>
+            <email>till.grallert@fu-berlin.de</email>
+        </contributor>
         <category citation-format="note"/>
         <category field="generic-base"/>
-        <summary>Chicago format with full notes and bibliography</summary>
-        <updated>2020-01-13T23:35:29+00:00</updated>
+        <summary>Chicago format with full notes and bibliography adapted to the requirements of historians.</summary>
+        <updated>2022-12-01 10:16:07 +0100</updated>
         <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     </info>
     <locale xml:lang="en">
