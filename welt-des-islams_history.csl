@@ -622,7 +622,7 @@
                 <text macro="pages"/>
             </if>
             <else-if match="any" type="article-journal article-magazine article-newspaper">
-                <text prefix=": " variable="locator"/>
+                <text prefix=", " variable="locator"/>
             </else-if>
             <else-if type="legal_case"/>
             <else>
