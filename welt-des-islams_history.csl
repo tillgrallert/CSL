@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style class="note" demote-non-dropping-particle="sort-only" version="1.0.2" xmlns="http://purl.org/net/xbiblio/csl">
     <info>
-        <title>Modern Language Association 6th edition (note)</title>
-        <title-short>MLA</title-short>
-        <id>http://www.zotero.org/styles/modern-language-association-6th-edition-note</id>
+        <title>Die Welt des Islams (note)</title>
+        <title-short>WdI</title-short>
+        <id>http://www.zotero.org/styles/welt-des-islams_history</id>
         <link href="http://www.zotero.org/styles/modern-language-association-6th-edition-note" rel="self"/>
         <link href="http://www.utoledo.edu/library/help/guides/docs/MLAstyle.pdf" rel="documentation"/>
         <author>
@@ -21,10 +21,14 @@
             <name>Elena Razlogova</name>
             <email>elena.razlogova@gmail.com</email>
         </contributor>
+        <contributor>
+            <name>Till Grallert</name>
+            <email>till.grallert@fu-berlin.de</email>
+        </contributor>
         <category citation-format="note"/>
         <category field="generic-base"/>
-        <summary>Footnote style for MLA, 6th edition, based on CMoS</summary>
-        <updated>2017-12-06T03:34:05+00:00</updated>
+        <summary>Footnote style for the journal "Die Welt des Islams" based on MLA, 6th edition, based on CMoS</summary>
+        <updated>2022-12-16</updated>
         <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     </info>
     <locale xml:lang="en">
@@ -40,7 +44,17 @@
                 <single>volume</single>
                 <multiple>volumes</multiple>
             </term>
+            <term name="open-quote">“</term>
+            <term name="close-quote">”</term>
         </terms>
+    </locale>
+    <locale xml:lang="fr">
+        <term name="open-quote">«</term>
+        <term name="close-quote">»</term>
+    </locale>
+    <locale xml:lang="de">
+        <term name="open-quote">„</term>
+        <term name="close-quote">“</term>
     </locale>
     <macro name="editor-translator">
         <group delimiter=", ">
@@ -441,7 +455,7 @@
     <macro name="locators-note">
         <choose>
             <if match="any" type="article-journal article-magazine">
-                <group delimiter=".">
+                <group delimiter=":">
                     <text prefix=" " variable="volume"/>
                     <text variable="issue"/>
                 </group>
