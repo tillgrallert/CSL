@@ -625,14 +625,11 @@
     </macro>
     <macro name="pages">
         <choose>
-            <if match="any" type="article-journal article-magazine">
+            <if match="any" type="article-journal article-magazine chapter paper-conference">
                 <!-- debugging -->
                 <!--<text variable="title" prefix="debug_pages[" suffix="]"/>-->
-                <text prefix=": " variable="page"/>
-            </if>
-            <else-if match="any" type="chapter paper-conference">
                 <text prefix=", " variable="page"/>
-            </else-if>
+            </if>
         </choose>
     </macro>
     <macro name="locators-chapter">
