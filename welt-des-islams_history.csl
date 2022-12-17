@@ -622,7 +622,8 @@
                     </choose>
                 </if>
                 <else-if match="any" type="bill book graphic legal_case legislation motion_picture report song">
-                    <number form="numeric" suffix=":" variable="volume"/>
+                    <!-- volume and page should be separated by a comma -->
+                    <number form="numeric" suffix=", " variable="volume"/>
                 </else-if>
             </choose>
             <text variable="locator"/>
