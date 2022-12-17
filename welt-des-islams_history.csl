@@ -394,7 +394,18 @@
             <else-if match="any" type="bill legislation legal_case"> </else-if>
             <!-- abbreviated journal titles -->
             <else-if match="any" type="article-journal">
-                <text font-style="italic" text-case="title" variable="container-title" form="short"/>
+                <text font-style="italic" form="short" text-case="title" variable="container-title"/>
+            </else-if>
+            <!-- only for Encyclopaedia of Islam -->
+            <else-if match="any" type="entry-encyclopedia">
+                <choose>
+                    <if variable="title-short">
+                        <text font-style="italic" variable="title-short"/>
+                    </if>
+                    <else>
+                        <text font-style="italic" text-case="title" variable="container-title"/>
+                    </else>
+                </choose>
             </else-if>
             <else>
                 <text font-style="italic" text-case="title" variable="container-title"/>
@@ -976,25 +987,35 @@
                         <text macro="contributors-note"/>
                         <text macro="title-note"/>
                         <text macro="version-note"/>
-                        <text macro="description-note"/>
-                        <text macro="secondary-contributors-note"/>
+                        <!--  remove for Encyclopaedia of Islam -->
+                        <choose>
+                            <if match="none" type="entry-encyclopedia">
+                                <text macro="description-note"/>
+                                <text macro="secondary-contributors-note"/>
+                            </if>
+                        </choose>
                         <text macro="container-title-note"/>
                         <!-- the imprint is not separated by commas -->
-                        <group delimiter=" ">
-                            <text macro="container-contributors-note"/>
-                            <!-- there is a problem here. If there is a locators-note, it should be prefixed by a comma -->
-                            <choose>
-                                <if match="all" variable="editor volume">
-                                    <text term=", "/>
-                                </if>
-                            </choose>
-                            <text macro="locators-note"/>
-                            <!--<text macro="collection-title" prefix=", "/>-->
-                            <text macro="issued-note"/>
-                            <text macro="locators-newspaper"/>
-                            <!-- this should contain the page range for book chapters, journal articles -->
-                            <text macro="point-locators"/>
-                        </group>
+                        <!--  remove for Encyclopaedia of Islam -->
+                        <choose>
+                            <if match="none" type="entry-encyclopedia">
+                                <group delimiter=" ">
+                                    <text macro="container-contributors-note"/>
+                                    <!-- there is a problem here. If there is a locators-note, it should be prefixed by a comma -->
+                                    <choose>
+                                        <if match="all" variable="editor volume">
+                                            <text term=", "/>
+                                        </if>
+                                    </choose>
+                                    <text macro="locators-note"/>
+                                    <!--<text macro="collection-title" prefix=", "/>-->
+                                    <text macro="issued-note"/>
+                                    <text macro="locators-newspaper"/>
+                                    <!-- this should contain the page range for book chapters, journal articles -->
+                                    <text macro="point-locators"/>
+                                </group>
+                            </if>
+                        </choose>
                         <!-- remove URL for some types -->
                         <choose>
                             <if match="none" type="book chapter">
