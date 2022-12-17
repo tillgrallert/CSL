@@ -974,6 +974,7 @@
                 <else-if match="any" type="personal_communication document">
                     <text macro="citation-archival"/>
                 </else-if>
+                <!-- magazine articles should also have a stable citation -->
                 <else-if position="subsequent">
                     <group delimiter=", ">
                         <text macro="archive-note-largest-to-smallest"/>
