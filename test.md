@@ -51,12 +51,19 @@ Diary entries are currently recorded as `manuscript`s in Zotero.[^5] This works 
 
 ### Letters
 
-Letters are recorded as `letter`s in Zotero.[^11] There is, however, a problem with subsequent references by the same author within a reference group in styles that omit the author name for subsequent references. The names of the author AND the **recipient** of the subsequent letters are omitted even if the latter differ. As can be deduced from this [@Dickson1885TestLetter] and this [@Dickson1885TestLettera] letter. If quoted in the same group [@Dickson1885TestLetter; @Dickson1885TestLettera], one recipient is omitted (depending on the sort order of the style).
+Letters are recorded as `letter`s in Zotero.[^11] There is, however, a problem with subsequent references by the same author within a reference group in styles that omit the author name for subsequent references (set through `@collapse` on `<cs:citation>`. The names of the author AND the **recipient** of the subsequent letters are omitted even if the latter differ. As can be deduced from this [@Dickson1885TestLetter] and this [@Dickson1885TestLettera] letter. If quoted in the same group [@Dickson1885TestLetter; @Dickson1885TestLettera], one recipient is omitted (depending on the sort order of the style).
 
 ## Other behaviours
 ### subsequent references by the same author
 
-It is not immediately clear to me how the behaviour for subsequent references by the same author is set for citations. There is `subsequent-author-substitute` on `<cs:bibliography>` but not on `<citation>` [@Marino2018ReadingCultureCode; @Marino+2016].
+The behaviour for subsequent references by the same author in citations is set through a list of controlled values for the `@collapse` attribute on `<citation>` [@Marino2018ReadingCultureCode; @Marino+2016]. The behaviour is documented in <https://github.com/citation-style-language/schema/blob/master/schemas/styles/csl.rnc>.
+
+- `year`
+- `citation-number`
+- `year-suffix`
+- `year-suffix-ranged`
+
+NOTE: `@collapse` will remove all types of contributors, including recipients, if the first author is the same and even if all other contributors differ.
 
 ## Second level
 

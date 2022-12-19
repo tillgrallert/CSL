@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- to do:
+<!-- note:
     - author information is removed for subsequent references within a reference group. While this is generally correct, it should not happen for archival letters, which might have different recipients
+    - this behaviour is set through @collapse on <citation>
 -->
 <style class="note" demote-non-dropping-particle="sort-only" page-range-format="chicago" version="1.0.2" xmlns="http://purl.org/net/xbiblio/csl">
     <info>
@@ -191,7 +192,8 @@
                         <text macro="translator-note"/>
                     </substitute>
                 </names>
-                <text macro="recipient-note"/>
+                <!-- removed recipients here and moved to citation-archival -->
+                <!--<text macro="recipient-note"/>-->
             </if>
             <else>
                 <names variable="author">
@@ -893,7 +895,9 @@
             </choose>
             <text variable="genre"/>
             <!-- problem: undocumented (?) behaviour that in sequences of multiple references with the same author this is only present in the first reference even if there are different recipients -->
+            <!-- the behaviour is set through @collapse on <citation>-->
             <text macro="contributors-note"/>
+            <text macro="recipient-note"/>
             <choose>
                 <if match="all" variable="publisher-place issue"/>
                 <else>
@@ -952,7 +956,8 @@
             </else>
         </choose>
     </macro>
-    <citation collapse="year" disambiguate-add-givenname="true" disambiguate-add-names="true" disambiguate-add-year-suffix="false" et-al-min="4" et-al-use-first="2"
+    <!-- do not add collapse="year" as this will cause issues with letters -->
+    <citation disambiguate-add-givenname="true" disambiguate-add-names="true" disambiguate-add-year-suffix="false" et-al-min="4" et-al-use-first="2"
         givenname-disambiguation-rule="primary-name-with-initials">
         <sort>
             <!--<key macro="contributors-sort"/>-->
