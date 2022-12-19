@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<style class="note" demote-non-dropping-particle="sort-only" page-range-format="chicago" version="1.0" xmlns="http://purl.org/net/xbiblio/csl">
+<!-- to do:
+    - author information is removed for subsequent references within a reference group. While this is generally correct, it should not happen for archival letters, which might have different recipients
+-->
+<style class="note" demote-non-dropping-particle="sort-only" page-range-format="chicago" version="1.0.2" xmlns="http://purl.org/net/xbiblio/csl">
     <info>
         <title>Die Welt des Islams (note)</title>
         <title-short>WdI</title-short>
@@ -179,6 +182,7 @@
     </macro>
     <macro name="contributors-note">
         <choose>
+            <!-- letters -->
             <if match="any" type="personal_communication">
                 <names variable="author">
                     <name and="text" delimiter=", " form="short"/>
@@ -888,7 +892,7 @@
                 </else-if>
             </choose>
             <text variable="genre"/>
-            <!-- problem: undocumented (?) behaviour that in sequences of multiple references with the same author-recipient combination, this is only present in the first reference -->
+            <!-- problem: undocumented (?) behaviour that in sequences of multiple references with the same author this is only present in the first reference even if there are different recipients -->
             <text macro="contributors-note"/>
             <choose>
                 <if match="all" variable="publisher-place issue"/>
