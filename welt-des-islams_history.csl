@@ -896,8 +896,10 @@
             <text variable="genre"/>
             <!-- problem: undocumented (?) behaviour that in sequences of multiple references with the same author this is only present in the first reference even if there are different recipients -->
             <!-- the behaviour is set through @collapse on <citation>-->
-            <text macro="contributors-note"/>
-            <text macro="recipient-note"/>
+            <group delimiter=" ">
+                <text macro="contributors-note"/>
+                <text macro="recipient-note"/>
+            </group>
             <choose>
                 <if match="all" variable="publisher-place issue"/>
                 <else>
