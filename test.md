@@ -119,4 +119,4 @@ Lorem ipsum dolor [@Yıldız+2008] sit amet consectetur adipiscing[^6] elit pena
 [^3]: Magazine articles: [@Butchart+1892a; @Johnston+1899; @oclc_644997575-i_17-div_8.d1e1603_en; @oclc_644997575-i_18-div_7.d2e1421_en, 23; @BulletinDeLallianceIsraélite+1892b].
 [^4]: [Bills, legal texts:  @MatbuatNizamnamesi1864, §6; @MatbuatNizamnamesi1872; @NizamAlMatbuatArt171909; @NizamAlMatbuatArt171909a, §6; @Nawfal+1883e, §6-9; @Young+1905e].
 [^5]: [Manuscripts incl. diary entries: @Bauernfeind+1889a; @Dickson+1882bt]
-[^11]: [Letters: @Dickson1885TestLetter; @Dickson1885TestLettera; @Green+1873; @Mishāqa+1900d; @Robeson+1884]
+[^11]: Letters: @Dickson1885TestLetter; @Dickson1885TestLettera; @Green+1873; @Mishāqa+1900d; @Robeson+1884
