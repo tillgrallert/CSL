@@ -1454,7 +1454,7 @@
                         </if>
                         <!-- remove non-sensical URLs. Just because they are there, I would not like to see every link referenced -->
                         <!-- exclude reference types -->
-                        <else-if match="any" type="chapter"/>
+                        <else-if match="any" type="chapter book"/>
                         <else-if match="all" variable="URL">
                             <!-- the location of the access date **before** the URL is unusual -->
                             <!-- I removed the condition as it didn't make sense to me -->
