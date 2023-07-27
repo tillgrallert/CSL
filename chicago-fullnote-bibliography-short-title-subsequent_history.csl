@@ -1,39 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<style class="note" demote-non-dropping-particle="display-and-sort" page-range-format="chicago" version="1.0" xmlns="http://purl.org/net/xbiblio/csl">
+<style class="note" demote-non-dropping-particle="display-and-sort" page-range-format="chicago" version="1.0.2" xmlns="http://purl.org/net/xbiblio/csl">
   <!-- I need to update this style with better support for newspaper and magazine articles, that also include volume and issue information if available. This is done in the point-locator macros -->
   <info>
     <title>Chicago Manual of Style 17th edition (full note, short title subsequent): for historians</title>
-    <id>http://www.zotero.org/styles/chicago-fullnote-bibliography-short-title-subsequent_history</id>
-    <link href="http://www.zotero.org/styles/chicago-fullnote-bibliography-short-title-subsequent" rel="self"/>
+    <title-short>CMS17 for history: full note, short title subsequent</title-short>
+    <id>60AFDFA5-47B1-4082-B4C0-DBA8FD254911</id>
+    <link href="https://tillgrallert.github.io/CSL/chicago-fullnote-bibliography-short-title-subsequent_history.csl" rel="self"/>
+    <link href="http://www.zotero.org/styles/chicago-fullnote-bibliography-short-title-subsequent" rel="template"/>
     <link href="http://www.zotero.org/styles/chicago-fullnote-bibliography" rel="template"/>
     <link href="http://www.chicagomanualofstyle.org/tools_citationguide.html" rel="documentation"/>
     <author>
-      <name>Julian Onions</name>
-      <email>julian.onions@gmail.com</email>
+      <name>Till Grallert</name>
+      <url>https://orcid.org/0000-0002-5739-8094</url>
     </author>
-    <contributor>
-      <name>Simon Kornblith</name>
-      <email>simon@simonster.com</email>
-    </contributor>
-    <contributor>
-      <name>Elena Razlogova</name>
-      <email>elena.razlogova@gmail.com</email>
-    </contributor>
-    <contributor>
-      <name>Frank Bennett</name>
-      <email>biercenator@gmail.com</email>
-    </contributor>
-    <contributor>
-      <name>Andrew Dunning</name>
-      <email>andrew.dunning@utoronto.ca</email>
-    </contributor>
-    <contributor>
-      <name>Sebastian Karcher</name>
-    </contributor>
     <category citation-format="note"/>
     <category field="generic-base"/>
-    <summary>Chicago format with full notes and bibliography</summary>
-    <updated>2020-01-13T23:35:29+00:00</updated>
+    <summary>Chicago format with full notes and bibliography for use in academic history. The style is based on http://www.zotero.org/styles/chicago-fullnote-bibliography-short-title-subsequent and has been heavily edited. First, to put archival reference first, as is established practice among historians. Second, to exclude primary sources, such as archival material or newspaper and magazine articles from the main bibliography. Third, to use condensed referencing for newspaper and magazine articles suitable for those using 19th century newspress as a major source.</summary>
+    <updated>2023-07-27 22:30:44 +0200</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
