@@ -655,8 +655,8 @@
   </citation>
   <bibliography entry-spacing="0" et-al-min="11" et-al-use-first="7" hanging-indent="true" subsequent-author-substitute="&#8212;&#8212;&#8212;">
     <sort>
-      <key macro="contributors"/>
       <key variable="issued" sort="descending"/>
+      <key macro="contributors"/>
       <key variable="title"/>
     </sort>
     <layout suffix=".">
