@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style class="in-text" demote-non-dropping-particle="display-and-sort" page-range-format="chicago" version="1.0" xmlns="http://purl.org/net/xbiblio/csl">
   <info>
-    <title>Chicago Manual of Style 17th edition (author-date)</title>
-    <id>http://www.zotero.org/styles/chicago-author-date</id>
-    <link href="http://www.zotero.org/styles/chicago-author-date" rel="self"/>
+    <title>Chicago Manual of Style 17th edition (author-date): short version for slides</title>
+    <title-short>CMS17: author date, slides</title-short>
+    <id>655EED87-3678-4314-A3BD-968492F1A6D0</id>
+    <link href="http://tillgrallert.github.io/CSL/chicago-author-date_slides.csl" rel="self"/>
+    <link href="http://www.zotero.org/styles/chicago-author-date" rel="template"/>
     <link href="http://www.chicagomanualofstyle.org/tools_citationguide.html" rel="documentation"/>
     <author>
       <name>Julian Onions</name>
@@ -30,10 +32,14 @@
     <contributor>
       <name>Brenton M. Wiernik</name>
     </contributor>
+    <contributor>
+      <name>Till Grallert</name>
+      <url>https://orcid.org/0000-0002-5739-8094</url>
+    </contributor>
     <category citation-format="author-date"/>
     <category field="generic-base"/>
-    <summary>The author-date variant of the Chicago style</summary>
-    <updated>2020-04-26T18:22:50+00:00</updated>
+    <summary>The author-date variant of the Chicago style with additional short titles in in-text references for use on slides. The style was adopted from http://www.zotero.org/styles/chicago-author-date.</summary>
+    <updated>2023-07-27 21:49:43 +0200</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -256,7 +262,7 @@
       </if>
       <else-if match="any" type="bill book graphic legislation motion_picture song">
         <choose>
-          <if variable="title-short" match="all">
+          <if match="all" variable="title-short">
             <text font-style="italic" text-case="title" variable="title-short"/>
           </if>
           <else>
@@ -291,7 +297,7 @@
       </else-if>
       <else-if match="any" type="legal_case interview patent">
         <choose>
-          <if variable="title-short" match="all">
+          <if match="all" variable="title-short">
             <text text-case="title" variable="title-short"/>
           </if>
           <else>
@@ -301,11 +307,11 @@
       </else-if>
       <else>
         <choose>
-          <if variable="title-short" match="all">
+          <if match="all" variable="title-short">
             <text quotes="true" text-case="title" variable="title-short"/>
           </if>
           <else>
-            <text  quotes="true" text-case="title" variable="title"/>
+            <text quotes="true" text-case="title" variable="title"/>
           </else>
         </choose>
       </else>
