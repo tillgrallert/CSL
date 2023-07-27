@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style class="in-text" demote-non-dropping-particle="display-and-sort" page-range-format="chicago" version="1.0.1" xmlns="http://purl.org/net/xbiblio/csl">
   <info>
-    <title>Chicago Manual of Style 17th edition (author-date): reverse chronological sorting</title>
+    <title>Chicago Manual of Style 17th edition (author-date): curriculum vitae, sorted by descending date</title>
     <title-short>CMS17: author date, newest to oldest</title-short>
     <id>E01B7959-EBAC-44FC-9A4B-5759B34F5771</id>
     <link href="http://tillgrallert.github.io/CSL/chicago-author-date_slides.csl" rel="self"/>
@@ -38,7 +38,7 @@
     </contributor>
     <category citation-format="author-date"/>
     <category field="generic-base"/>
-    <summary>The author-date variant of the Chicago style with reverse chronological sorting in bibliographies in order to support lits of publications and presentations that should show the latest on top. The style was adopted from http://www.zotero.org/styles/chicago-author-date.</summary>
+    <summary>The author-date variant of the Chicago style with reverse chronological sorting in bibliographies in order to support lits of publications and presentations in a curriculum vitae that should show the latest on top. The style was adopted from http://www.zotero.org/styles/chicago-author-date.</summary>
     <updated>2023-07-27 21:31:38 +0200</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
@@ -655,7 +655,7 @@
   </citation>
   <bibliography entry-spacing="0" et-al-min="11" et-al-use-first="7" hanging-indent="true" subsequent-author-substitute="&#8212;&#8212;&#8212;">
     <sort>
-      <key variable="issued" sort="descending"/>
+      <key sort="descending" variable="issued"/>
       <key macro="contributors"/>
       <key variable="title"/>
     </sort>
